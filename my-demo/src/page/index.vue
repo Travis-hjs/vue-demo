@@ -1,12 +1,12 @@
 <template lang="html">
 	<div class="index">
         <nav>
-            <router-link tag="li" to="/vuex" data-spread>Vuex</router-link>
+            <router-link tag="li" to="/home" data-spread>Home</router-link>
             <router-link tag="li" to="/plug" data-spread>插件</router-link>
             <li @click="nextPage" data-spread>next-page</li>
         </nav>
 		<!-- 路由渲染的位置 -->
-	    <router-view></router-view>
+	    <router-view class="content"></router-view>
 	</div>
 </template>
 
@@ -34,8 +34,9 @@ export default {
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
     nav{
-        width: 100%; height: .88rem; .flex(); background-color: @textColor;
+        width: 100%; height: .88rem; .flex(); background-color: @textColor; position: fixed; top: 0; left: 0; z-index: 10; box-shadow: 0 0 20px 0 rgba(0,0,0,0.8);
         li{ line-height: .88rem; text-align: center; .title(); color: #fff; .f(1); }
         .link-active{ color: @themeColor; }
     }
+	.content{ padding-top: .88rem; }
 </style>

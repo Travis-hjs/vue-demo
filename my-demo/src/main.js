@@ -28,6 +28,7 @@ window.addEventListener('popstate', e => {
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App/>'
 })

@@ -1,8 +1,8 @@
 <template lang="html">
 	<header>
-        <span class="aui-iconfont aui-icon-left" @click="goBack"></span>
+        <span @click="goBack" data-spread><i class="aui-iconfont aui-icon-left"></i></span>
         <h2>{{ title }}</h2>
-        <span>{{  }}</span>
+        <span>{{ rightText }}</span>
     </header>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 	data () {
 		return {
             title: '标题',
-            rightText: '右边文字'
+            rightText: 'right'
 		}
 	},
 	created () {
@@ -31,8 +31,9 @@ export default {
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
     header{
-        .flex(); width: 100%; height: .88rem; background-color: @textColor;
-        span{ width: .88rem; .standard(); color: #fff; text-align: center; line-height: .88rem; }
+        .flex(); width: 100%; height: .88rem; overflow: hidden; background-color: @textColor; position: fixed; top: 0; left: 0; z-index: 10; box-shadow: 0 0 20px 0 rgba(0,0,0,0.8);
+        span{ width: .88rem; .flex(); .vertical(); .center(); }
+		.aui-icon-left{ font-weight: 600; .standard(); color: #fff; }
 		h2{ .title(); color: #fff; text-align: center; .f(1); line-height: .88rem; }
     }
 </style>

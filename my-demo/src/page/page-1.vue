@@ -1,5 +1,5 @@
 <template lang="html">
-	<div class="page-1">
+	<div class="content">
 		<top></top>
 		<!-- 新建的模板 -->
 		<router-link to="/page-2">click-me-nxet</router-link>
@@ -30,5 +30,5 @@ export default {
 
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
-    .page-1{ width: 100%; background-color: palevioletred; height: 200vh; }
+    .content{ width: 100%; background-color: palevioletred; height: 200vh; }
 </style>

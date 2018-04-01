@@ -9,8 +9,11 @@
 		</div>
 		<h2>交互提示</h2>
 		<ul class="btn_list">
-			<li v-for="(item, index) in btnList" :key="index" data-opacity @click="promptsBtn(index)">{{ item }}</li>
+			<li v-for="(item, index) in btnList" :key="index" data-spread @click="promptsBtn(index)">{{ item }}</li>
 		</ul>
+		<h2>Ajax-请求</h2>
+		<div class="bottom_btn" data-spread @click="getData">发送一个post请求</div>
+		<div class="request_content">{{ requestData }}</div>
 	</div>
 </template>
 
@@ -31,7 +34,10 @@ export default {
 					image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg'
 				}
 			],
-			btnList: ['alert','confirm','loading','load-ball','toast']
+			btnList: ['alert','confirm','loading','load-ball','toast'],
+			requestData: {
+				content: '请求数据内容盒子'
+			}
 		}
 	},
 	created () {
@@ -71,6 +77,15 @@ export default {
 			}else {
 				this.$msg({ type: 'toast', text: '这里是底部弹出文字', time: 2500 })
 			}
+		},
+		getData () {
+			this.$msg({ type: 'load', text: '加载中..' })
+			this.$http.post('store/v2.groups/product.html',{}, ret => {
+				this.$msg({ type: 'remove' })
+				// console.log(ret);
+				if (ret.code != 1) return this.$msg({ type: 'alert', text: ret.msg });
+				this.requestData = ret.data;
+			}, err => this.$msg({ type: 'toast' }))
 		}
 	}
 }
@@ -89,5 +104,7 @@ export default {
 			padding: 0 .3rem;
 			li{ margin-bottom: .2rem; background-color: @textColor; line-height: .88rem; .standard(); color: @themeColor; text-align: center; }
 		}
+		.bottom_btn{ margin-bottom: .4rem; }
+		.request_content{ width: 6.9rem; border: solid 1px @textColor; min-height: 2rem; margin-bottom: .4rem; border-radius: .08rem; margin: 0 auto; .standard(); overflow: hidden; }
 	}
 </style>

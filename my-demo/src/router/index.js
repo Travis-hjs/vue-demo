@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/page/index'
-import VuexPage from '@/page/vuex'
+import home from '@/page/home'
 import Plug from '@/page/plug'
 // 分模块打包
 const PageA = () => import ( /* webpackChunkName: "page" */ '@/page/page-1')
@@ -20,12 +20,12 @@ export default new Router({
         {
             path: '/',
             name: 'root',
-            redirect: '/vuex',
+            redirect: '/home',
             component: Index,
             children: [
                 {
-                    path: '/vuex',
-                    component: VuexPage
+                    path: '/home',
+                    component: home
                 }, {
                     path: '/plug',
                     component: Plug

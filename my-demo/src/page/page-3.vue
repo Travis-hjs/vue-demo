@@ -1,5 +1,5 @@
 <template lang="html">
-	<div class="page-3">
+	<div class="content">
 		<top></top>
 		<!-- 新建的模板 -->
 	</div>
@@ -29,5 +29,5 @@ export default {
 
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
-    .page-3{ width: 100%; background-color: purple; height: 200vh; }
+    .content{ width: 100%; background-color: purple; height: 200vh; }
 </style>
