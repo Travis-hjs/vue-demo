@@ -4,9 +4,8 @@ import Index from '@/page/index'
 import home from '@/page/home'
 import Plug from '@/page/plug'
 // 分模块打包
-const PageA = () => import ( /* webpackChunkName: "page" */ '@/page/page-1')
-const PageB = () => import ( /* webpackChunkName: "page" */ '@/page/page-2')
-const PageC = () => import ( /* webpackChunkName: "page" */ '@/page/page-3')
+const Cart = () => import ( /* webpackChunkName: "page" */ '@/page/cart')
+const Navtab = () => import ( /* webpackChunkName: "page" */ '@/page/navTab')
 
 // 这里定义的goback方法将等同于浏览器的返回事件
 Router.prototype.goBack = function () {
@@ -32,14 +31,17 @@ export default new Router({
                 }
             ]
         },{
-            path: '/page-1',
-            component: PageA
+            meta: {
+                title: '购物车'
+            },
+            path: '/cart',
+            component: Cart
         },{
-            path: '/page-2',
-            component: PageB
-        },{
-            path: '/page-3',
-            component: PageC
+            meta: {
+                title: 'menu-tab'
+            },
+            path: '/navtab',
+            component: Navtab
         }
     ],
     // 路由切换时回到顶部

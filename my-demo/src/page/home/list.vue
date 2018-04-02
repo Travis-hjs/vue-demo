@@ -51,7 +51,7 @@ export default {
 	},
 	mounted () {
         this.listData.queues = this.listData.goodsList
-        this.resetStyle();
+        this.resetStyle()
 	},
 	methods: {
         // 随机

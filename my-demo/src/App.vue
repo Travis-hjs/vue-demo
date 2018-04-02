@@ -35,7 +35,7 @@ export default {
     @import "../static/style/prompt.css";
     @import "../static/style/picker.css";
     #app{ width: 100%; max-width: 680px; overflow: hidden; margin: 0 auto; }
-    .content{ padding-top: .88rem; }
+    .content{ padding-top: 1rem; }
     /* 轮播图圆点样式 */
     .swiper .swiper_pagination{ position: absolute; left: 50%; bottom: 8px; height: 8px; transform: translateX(-50%); }
     .swiper .swiper_btn{ float: left; margin-left: 8px; width: 8px; height: 8px; background-color: rgba(0,0,0,0.3); border: solid 1px #fff; border-radius: 50%; }
@@ -51,29 +51,16 @@ export default {
     //     transition: all .4s cubic-bezier(.55,0,.1,1);
     // }
     .page-next-enter, .page-back-leave-active {
-        position: absolute;
-        width:100%;
+        position: fixed;
+        width: 100%;
         transform: translate3d(100%, 0px, 0px);
     }
-    .page-next-leave-active, .page-back-enter {
-        position: absolute;
-        width:100%;
+    .page-back-enter, .page-next-leave-active{
+        position: fixed;
+        width: 100%;
         transform: translate3d(-100%, 0px, 0px);
     }
-    // 页面进入
-    // .page-next-enter, .page-next-leave-to{
-    //     position: fixed; top: 0; left: 0;
-    //     transform: translate3d(100%, 0%, 0px);
-    // }
-    // .page-next-leave-to{
-    //     position: fixed; top: 0; left: 0;
-    //     transform: translate3d(0%, 0%, 0px);
-    // }
-    // // 页面离开
-    // .page-back-enter, .page-back-leave-to{
-    //     position: fixed; top: 0; left: 0;
-    //     transform: translate3d(-100%, 0%, 0px);
-    // }
-    .page-next-enter-active, .page-back-enter-active{ transition: all .4s cubic-bezier(.55,0,.1,1); }
-    .page-next-leave-active, .page-back-leave-active{ transition: .3s all; }
+    // cubic-bezier(.55,0,.1,1)
+    .page-next-enter-active, .page-back-enter-active{ transition: .3s all cubic-bezier(.3,0,.3,1); }
+    .page-next-leave-active, .page-back-leave-active{ transition: .3s all cubic-bezier(1,.3,0,.3); }
 </style>

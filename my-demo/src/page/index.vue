@@ -25,7 +25,7 @@ export default {
 	},
 	methods: {
 		nextPage () {
-			this.$router.push('/page-1')
+			this.$router.push('/cart')
 		}
 	}
 }

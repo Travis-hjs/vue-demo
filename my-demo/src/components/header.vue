@@ -1,7 +1,7 @@
 <template lang="html">
 	<header>
         <span @click="goBack" data-spread><i class="aui-iconfont aui-icon-left"></i></span>
-        <h2>{{ title }}</h2>
+        <h2>{{ $route.meta.title }}</h2>
         <span>{{ rightText }}</span>
     </header>
 </template>
@@ -15,7 +15,7 @@ export default {
 		}
 	},
 	created () {
-
+		
 	},
 	mounted () {
 
