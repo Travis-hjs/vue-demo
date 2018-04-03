@@ -1,11 +1,10 @@
 <template lang="html">
 	<div class="content">
         <top></top>
-		<router-link class="tab_btn" to="/navtab">navTab<i class="aui-iconfont aui-icon-right"></i></router-link>
         <ul class="cart_list">
-            <li v-for="(item, index) in cartList" :key="item.id">
+            <li v-for="(item, index) in cartData.cartList" :key="item.id">
                 <div :class="['checked_btn',{ check_on: item.isSelect }]" @click="single(index)"></div>
-                <div class="goods_photo" :style="{ backgroundImage: `url(${ item.image })` }"></div>
+				<router-link tag="div" class="goods_photo" :style="{ backgroundImage: `url(${ item.image })` }" to="/navtab"></router-link>
                 <div class="goods_text">
                     <h2>{{ item.title }}</h2>
                     <p>{{ item.spec }}</p>
@@ -30,70 +29,21 @@
 
 <script>
 import Top from '@/components/header'
+import { mapState } from 'vuex'
 
 export default {
 	data () {
 		return {
-            select: false,
-            cartList: [
-                {
-                    id: 0,
-                    image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
-                    title: '商品标题商品标题商品标题',
-                    spec: '颜色：黑色',
-                    num: 12,
-                    price: '168.00',
-                    isSelect: false
-                },{
-                    id: 1,
-                    image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
-                    title: '商品标题商品标题商品标题',
-                    spec: '颜色：黑色',
-                    num: 2,
-                    price: '168.00',
-                    isSelect: false
-                },{
-                    id: 2,
-                    image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
-                    title: '商品标题商品标题商品标题',
-                    spec: '颜色：黑色',
-                    num: 12,
-                    price: '168.00',
-                    isSelect: false
-                },{
-                    id: 3,
-                    image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
-                    title: '商品标题商品标题商品标题',
-                    spec: '颜色：黑色',
-                    num: 12,
-                    price: '168.00',
-                    isSelect: false
-                },{
-                    id: 4,
-                    image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
-                    title: '商品标题商品标题商品标题',
-                    spec: '颜色：黑色',
-                    num: 2,
-                    price: '168.00',
-                    isSelect: false
-                },{
-                    id: 5,
-                    image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
-                    title: '商品标题商品标题商品标题',
-                    spec: '颜色：黑色',
-                    num: 12,
-                    price: '168.00',
-                    isSelect: false
-                }
-            ]
+
 		}
 	},
     components: { Top },
     computed: {
+		...mapState(['cartData']),
         // 总价
 		totalPrice() {
 			let _price = 0;
-            this.cartList.forEach((item, index) => {
+            this.cartData.cartList.forEach((item, index) => {
                 if (item.isSelect) {
                     _price += Number(item.num) * Number(item.price)
                 }
@@ -103,12 +53,12 @@ export default {
         // 全选
 		allChecked() {
 			let _all = true;
-            this.cartList.forEach((item, index) => {
+            this.cartData.cartList.forEach((item, index) => {
                 if (!item.isSelect) {
                     _all = false
-                    this.select = false
+                    this.cartData.select = false
                 }else {
-                    this.select = true
+                    this.cartData.select = true
                 }
             })
 			return _all;
@@ -122,33 +72,33 @@ export default {
 	},
 	methods: {
         add (key) {
-            this.cartList[key].num ++
+            this.cartData.cartList[key].num ++
         },
         reduce (key) {
-            if (this.cartList[key].num == 1) return ;
-            this.cartList[key].num --
+            if (this.cartData.cartList[key].num == 1) return ;
+            this.cartData.cartList[key].num --
         },
         deleteBtn (key) {
-            this.cartList.splice(key, 1)
+            this.cartData.cartList.splice(key, 1)
         },
         // 单个商品选择
 		single(key) {
-			this.cartList[key].isSelect = !this.cartList[key].isSelect;
+			this.cartData.cartList[key].isSelect = !this.cartData.cartList[key].isSelect;
 		},
         // 全选按钮
 		allSelect() {
             if (this.allChecked) {
-                this.cartList.forEach((item, index) => {
+                this.cartData.cartList.forEach((item, index) => {
                     item.isSelect = false
                 })
             }else {
-                this.cartList.forEach((item, index) => {
+                this.cartData.cartList.forEach((item, index) => {
                     item.isSelect = true
                 })
             }
 		},
         buy () {
-            if (!this.select) return this.$msg({ type: 'alert', text: '你还没选择商品呢~' });
+            if (!this.cartData.select) return this.$msg({ type: 'alert', text: '你还没选择商品呢~' });
         }
 	}
 }
@@ -156,10 +106,6 @@ export default {
 
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
-	.tab_btn{
-		.standard(); color: @textColor; padding: .1rem .3rem; border: solid 1px @textColor; float: right; line-height: .6rem; margin: .3rem; position: relative;
-		.aui-icon-right{ color: @textColor; font-weight: 600; } 
-	}
     .cart_list{
         width: 100%; overflow: hidden; padding-bottom: 1.2rem; clear: both;
         li{

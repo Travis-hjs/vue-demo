@@ -34,9 +34,9 @@ export default {
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
     nav{
-        width: 100%; height: .88rem; .flex(); background-color: @textColor; position: fixed; top: 0; left: 0; z-index: 10; box-shadow: 0 0 20px 0 rgba(0,0,0,0.8);
-        li{ line-height: .88rem; text-align: center; .title(); color: #fff; .f(1); }
+        width: 100%; height: .9rem; .flex(); background-color: @textColor; position: fixed; top: 0; left: 0; z-index: 10; box-shadow: 0 0 20px 0 rgba(0,0,0,0.8);
+        li{ line-height: .9rem; text-align: center; .title(); color: #fff; .f(1); }
         .link-active{ color: @themeColor; }
     }
-	.content{ padding-top: .88rem; }
+	.content{ padding-top: 1.1rem; }
 </style>

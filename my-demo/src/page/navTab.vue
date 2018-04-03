@@ -2,18 +2,18 @@
 	<div class="content">
         <top></top>
 		<nav>
-            <li v-for="(item, index) in navList" :key="item.id" :class="{ li_active: item.id == active }" @click="menuFun(item.id)">{{ item.text }}</li>
+            <li v-for="(item, index) in navList" :key="item.id" :class="{ li_active: item.id == navTabState.active }" @click="menuFun(item.id)">{{ item.text }}</li>
             <div class="line"></div>
         </nav>
         <div class="list_content">
             <transition-group tag="ul" name="liMove">
             <!-- <ul> -->
-                <li v-for="(item, index) in list" :key="item.id" v-if="item.state == 1 && (active == 0 || active == 1)">
+                <li v-for="(item, index) in list" :key="item.id" v-if="item.state == 1 && (navTabState.active == 0 || navTabState.active == 1)">
                     <p>{{ item.text }}</p>
                     <h2>完成</h2>
                 </li>
-                <li v-for="(item, index) in list" :key="item.id" v-if="item.state == 2 && (active == 0 || active == 2)">
-                    <p>{{ item.text }}</p>
+                <li v-for="(item, index) in list" :key="item.id" v-if="item.state == 2 && (navTabState.active == 0 || navTabState.active == 2)">
+                    <p class="red">{{ item.text }}</p>
                     <h2>失败</h2>
                 </li>
             <!-- </ul> -->
@@ -24,11 +24,11 @@
 
 <script>
 import Top from '@/components/header'
+import { mapState } from 'vuex'
 
 export default {
 	data () {
 		return {
-            active: 0,
             navList: [
                 {
                     id: 0,
@@ -45,43 +45,43 @@ export default {
                 {
                     id: 0,
                     state: 1,
-                    text: '模拟的列表数据...'
+                    text: '当前列表状态为已完成...'
                 },{
                     id: 1,
                     state: 1,
-                    text: '模拟的列表数据...'
+                    text: '当前列表状态为已完成...'
                 },{
                     id: 2,
                     state: 2,
-                    text: '模拟的列表数据...'
+                    text: '当前为失败列表...'
                 },{
                     id: 3,
                     state: 1,
-                    text: '模拟的列表数据...'
+                    text: '当前列表状态为已完成...'
                 },{
                     id: 4,
                     state: 1,
-                    text: '模拟的列表数据...'
+                    text: '当前列表状态为已完成...'
                 },{
                     id: 5,
                     state: 2,
-                    text: '模拟的列表数据...'
+                    text: '当前为失败列表...'
                 },{
                     id: 6,
                     state: 1,
-                    text: '模拟的列表数据...'
+                    text: '当前列表状态为已完成...'
                 },{
                     id: 7,
                     state: 1,
-                    text: '模拟的列表数据...'
+                    text: '当前列表状态为已完成...'
                 },{
                     id: 8,
                     state: 2,
-                    text: '模拟的列表数据...'
+                    text: '当前为失败列表...'
                 },{
                     id: 9,
                     state: 1,
-                    text: '模拟的列表数据...'
+                    text: '当前列表状态为已完成...'
                 },{
                     id: 10,
                     state: 1,
@@ -91,6 +91,7 @@ export default {
 		}
 	},
     components: { Top },
+	computed: mapState(['navTabState']),
 	created () {
 
 	},
@@ -99,7 +100,7 @@ export default {
 	},
 	methods: {
         menuFun (num) {
-            this.active = num
+            this.navTabState.active = num
             this.lineSlide();
         },
         resetStyle () {
@@ -109,8 +110,8 @@ export default {
         },
         lineSlide () {
             let [_slide, _howFar] = [document.querySelector('.line'), document.querySelector('nav li').offsetWidth];
-			_slide.style.WebkitTransform = 'translateX('+_howFar * this.active+'px)';
-			_slide.style.transform = 'translateX('+_howFar * this.active+'px)';
+			_slide.style.WebkitTransform = 'translateX('+_howFar * this.navTabState.active+'px)';
+			_slide.style.transform = 'translateX('+_howFar * this.navTabState.active+'px)';
         },
 	}
 }
@@ -131,6 +132,7 @@ export default {
             .transition(1s); width: 100%; box-sizing: border-box; padding: .3rem; height: 3rem; .flex(); .vertical(); .center(); box-shadow: 0 10px 25px 0 rgba(0,0,0,0.2); margin-bottom: .4rem; border-radius: .15rem;
             h2{ .title(); color: @themeColor; }
             p{ .standard(); .f(1); }
+            .red{ color: red }
         }
     }
     // 动画

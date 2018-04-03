@@ -106,7 +106,66 @@ const state = {
                 text: '产品二十'
             }
         ]
-    }
+    },
+    // 购物车数据
+    cartData: {
+        select: false,
+        cartList: [
+            {
+                id: 0,
+                image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
+                title: '商品标题商品标题商品标题',
+                spec: '颜色：黑色',
+                num: 12,
+                price: '168.00',
+                isSelect: false
+            },{
+                id: 1,
+                image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
+                title: '商品标题商品标题商品标题',
+                spec: '颜色：黑色',
+                num: 2,
+                price: '168.00',
+                isSelect: false
+            },{
+                id: 2,
+                image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
+                title: '商品标题商品标题商品标题',
+                spec: '颜色：黑色',
+                num: 12,
+                price: '168.00',
+                isSelect: false
+            },{
+                id: 3,
+                image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
+                title: '商品标题商品标题商品标题',
+                spec: '颜色：黑色',
+                num: 12,
+                price: '168.00',
+                isSelect: false
+            },{
+                id: 4,
+                image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
+                title: '商品标题商品标题商品标题',
+                spec: '颜色：黑色',
+                num: 2,
+                price: '168.00',
+                isSelect: false
+            },{
+                id: 5,
+                image: 'http://s.amazeui.org/media/i/demos/bing-1.jpg',
+                title: '商品标题商品标题商品标题',
+                spec: '颜色：黑色',
+                num: 12,
+                price: '168.00',
+                isSelect: false
+            }
+        ]
+    },
+    // 导航切换状态
+    navTabState: {
+        active: 0
+    },
 }
 
 const mutations = {

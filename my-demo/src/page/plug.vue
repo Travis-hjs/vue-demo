@@ -1,7 +1,22 @@
 <template lang="html">
 	<div class="plug">
         <h2>轮播图</h2>
-		<div class="swiper">
+		<span class="notes">has-loop</span>
+		<div class="swiper loop">
+			<ul class="swiper_list">
+				<li class="swiper_slider" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
+			</ul>
+			<div class="swiper_pagination"></div>
+		</div>
+		<span class="notes">no-loop</span>
+		<div class="swiper noLoop">
+			<ul class="swiper_list">
+				<li class="swiper_slider" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
+			</ul>
+			<div class="swiper_pagination"></div>
+		</div>
+		<span class="notes">transformY</span>
+		<div class="swiper transformY">
 			<ul class="swiper_list">
 				<li class="swiper_slider" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
 			</ul>
@@ -54,11 +69,25 @@ export default {
 	methods: {
 		getBanner () {
 			new Swiper({
-				el: '.swiper',
+				el: '.loop',
 				pagination: true,
 				autoPaly: true,
 				interval: 5000,
 				loop: true
+			});
+			new Swiper({
+				el: '.noLoop',
+				pagination: true,
+				autoPaly: true,
+				interval: 5000
+			});
+			new Swiper({
+				el: '.transformY',
+				pagination: true,
+				autoPaly: true,
+				interval: 5000,
+				loop: true,
+				direction: true
 			});
 		},
 		promptsBtn (num) {
@@ -120,10 +149,14 @@ export default {
 	@import "../../static/style/base.less";
 	.plug{
 		h2{ .title(); line-height: 1rem; text-indent: .3rem; color: @themeColor; }
+		.notes{ .label(); color: @fadeColor; line-height: .6rem; text-indent: .3rem; }
 		.swiper{
 			width: 100%; height: 4rem; position: relative; background-color: #eee; overflow: hidden;
 			.swiper_list{ overflow: hidden; position: relative; width: 100%; }
 			.swiper_slider{ height: 4rem; float: left; width: 100%; text-align: center; background-size: cover; background-position: center center; }
+		}
+		.transformY{
+			.swiper_slider{ height: 4rem; float: none; width: 100%; }
 		}
 		.btn_list{
 			padding: 0 .3rem;
