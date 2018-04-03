@@ -50,26 +50,23 @@ export default {
     //     width:100%;
     //     transition: all .4s cubic-bezier(.55,0,.1,1);
     // }
-    .page-next-enter{
+    .page-next-enter, .page-back-enter, .page-back-leave-active, .page-next-leave-active{  
         position: fixed;
         width: 100%;
+        height: 100vh;
+    }
+    .page-next-enter{
         transform: translateX(100%);
     }
     .page-back-enter{
-        position: fixed;
-        width: 100%;
         transform: translateX(-100%);
     }
     .page-back-leave-active{
-        position: fixed;
         opacity: 0;
-        width: 100%;
         transform: translateX(90%);
     }
     .page-next-leave-active{
-        position: fixed;
         opacity: 0;
-        width: 100%;
         transform: translateX(-90%);
     }
     .page-next-enter-active, .page-back-enter-active{ transition: .4s all; }

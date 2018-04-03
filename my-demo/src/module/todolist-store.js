@@ -1,10 +1,10 @@
-const STORAGE_KEY = 'todolist-vue'
+const store_key = 'todolist-vue'
 export default{
     fetch () {
-        return JSON.parse(window.sessionStorage.getItem(STORAGE_KEY) || '[]')
+        return JSON.parse(window.localStorage.getItem(store_key) || '[]')
     },
     save (lists) {
-        window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(lists))
+        window.localStorage.setItem(store_key, JSON.stringify(lists))
     }
 }
 /*
