@@ -17,7 +17,7 @@ export default {
     },
     watch: {
 　　　'$route' (to, from) {
-　　　　let isBack = this.$router.isBack  //  监听路由变化时的状态为前进还是后退
+　　　　    let isBack = this.$router.isBack  //  监听路由变化时的状态为前进还是后退
             if(isBack) {
                 this.transitionName = 'page-back'
             } else {
