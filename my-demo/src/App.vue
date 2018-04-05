@@ -2,7 +2,7 @@
     <div id="app">
         <transition :name="transitionName">
             <router-view class="child-view"></router-view>
-        </transition >
+        </transition>
     </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
     //     width:100%;
     //     transition: all .4s cubic-bezier(.55,0,.1,1);
     // }
-    .page-next-enter, .page-back-enter, .page-back-leave-active, .page-next-leave-active{  
+    .page-next-enter, .page-back-enter, .page-back-leave-active, .page-next-leave-active{
         position: fixed;
         width: 100%;
         height: 100vh;
@@ -69,6 +69,5 @@ export default {
         opacity: 0;
         transform: translateX(-90%);
     }
-    .page-next-enter-active, .page-back-enter-active{ transition: .4s all; }
-    .page-next-leave-active, .page-back-leave-active{ transition: .4s all; }
+    .page-next-enter-active, .page-back-enter-active, .page-next-leave-active, .page-back-leave-active{ transition: .4s all; }
 </style>

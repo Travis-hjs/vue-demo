@@ -44,9 +44,11 @@ exports.cssLoaders = function (options) {
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
+    // 这里的 publicPath手动退回两个文件，绝对路径
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
+        publicPath: '../../',
         fallback: 'vue-style-loader'
       })
     } else {
