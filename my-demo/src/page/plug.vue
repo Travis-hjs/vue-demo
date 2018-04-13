@@ -1,6 +1,21 @@
 <template lang="html">
 	<div class="plug">
-        <h2>轮播图</h2>
+		<!-- 下拉头部状态盒子 -->
+		<div class="refresh_title">
+			<!-- 旋转的圈圈 -->
+            <div class="preloader preloader_hover">
+                <span class="preloader-inner">
+                    <span class="preloader-inner-gap"></span>
+                    <span class="preloader-inner-left">
+                        <span class="preloader-inner-half-circle"></span>
+                    </span>
+                    <span class="preloader-inner-right">
+                        <span class="preloader-inner-half-circle"></span>
+                    </span>
+                </span>
+            </div>
+		</div>
+		<h2>轮播图</h2>
 		<span class="notes">has-loop</span>
 		<div class="swiper loop">
 			<ul class="swiper_list">
@@ -36,6 +51,7 @@
 
 <script>
 import { iosProvinces, iosCitys, iosCountys } from '@/module/city'
+import { DropDownRefresh, RefreshEnd } from '@/module/refresh'
 import Picker from 'iosselect'
 import Swiper from '@/module/swiper'
 
@@ -65,6 +81,7 @@ export default {
 	},
 	mounted () {
 		this.getBanner();
+		this.getRefresh()
 	},
 	methods: {
 		getBanner () {
@@ -89,6 +106,21 @@ export default {
 				loop: true,
 				direction: true
 			});
+		},
+		getRefresh () {
+			new DropDownRefresh({
+                el: '.plug',
+                maxRange: 100
+            }, function () {
+                console.log('成功下拉');
+				document.querySelector('.preloader').classList.remove('preloader_hover');
+                setTimeout(() => {
+                    new RefreshEnd('.plug')
+					document.querySelector('.preloader').classList.add('preloader_hover');
+                },2000)
+            }, function(num){
+                // console.log(`滑动的距离：${ num }`);
+            });
 		},
 		promptsBtn (num) {
 			if (num == 0) {
@@ -145,8 +177,12 @@ export default {
 }
 </script>
 
+<style>
+	.refresh_bg{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0); z-index: 100; }
+</style>
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
+	@import "../../static/style/loading.css";
 	.plug{
 		h2{ .title(); line-height: 1rem; text-indent: .3rem; color: @themeColor; }
 		.notes{ .label(); color: @fadeColor; line-height: .6rem; text-indent: .3rem; }
@@ -168,5 +204,18 @@ export default {
 			display: block; width: 6.9rem; height: .88rem; background-color: @textColor; box-sizing: border-box; margin: 0 auto; color: #fff; text-align: center; margin-bottom: .4rem;
 			&::-webkit-input-placeholder{ color: @themeColor; }
 		}
+		/* 下拉提示盒子样式 */
+		.refresh_title{
+			position: fixed;
+			width: 100%;
+			top: -80px;
+			left: 0;
+			height: 80px;
+			z-index: 99;
+			display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap;
+			-webkit-box-align: center; -webkit-align-items: center; align-items: center;
+			-webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+		}
+		.preloader_hover{ background-color: orange; border-radius: 50%; border: 2px solid orange; }
 	}
 </style>
