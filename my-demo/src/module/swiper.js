@@ -20,8 +20,8 @@ function Swiper (_params) {
 		let _distance = _direction ? _h : _w;
 		window.myAnimation = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 		function hasAnimation() {
-			_ul.style.WebkitTransition = `${_moveTime/1000}s all`;
-			_ul.style.transition = `${_moveTime/1000}s all`;
+			_ul.style.WebkitTransition = `${ _moveTime/1000 }s all`;
+			_ul.style.transition = `${ _moveTime/1000 }s all`;
 		}
 		function noAnimation() {
 			_ul.style.WebkitTransition = '0s all';
@@ -29,21 +29,27 @@ function Swiper (_params) {
 		}
 		function slideStyle(_num) {
 			if (_direction) {
-				_ul.style.WebkitTransform = `translate3d(0px, ${_num}px, 0px)`;
-				_ul.style.transform = `translate3d(0px, ${_num}px, 0px)`;
+				_ul.style.WebkitTransform = `translate3d(0px, ${ _num }px, 0px)`;
+				_ul.style.transform = `translate3d(0px, ${ _num }px, 0px)`;
 			}else {
-				_ul.style.WebkitTransform = `translate3d(${_num}px, 0px, 0px)`;
-				_ul.style.transform = `translate3d(${_num}px, 0px, 0px)`;
+				_ul.style.WebkitTransform = `translate3d(${ _num }px, 0px, 0px)`;
+				_ul.style.transform = `translate3d(${ _num }px, 0px, 0px)`;
 			}
 		}
 		function touchRange() {
 			let _num = 0;
+			_num = _md + (_ed - _sd);
 			if ((_ed - _sd) >= _distance) {
-				_num = _md + _distance;
+				_num = _md + _distance
 			}else if ((_ed - _sd) <= -_distance) {
 				_num = _md - _distance
-			}else {
-				_num = _md + (_ed - _sd);
+			}
+			if (!_loop) {
+				if ((_ed - _sd) > 0 && _index === 0) {
+					_num = _md + ((_ed - _sd) - ((_ed - _sd) * 0.6))
+				}else if ((_ed - _sd) < 0 && _index === _li.length-1) {
+					_num = _md + ((_ed - _sd) - ((_ed - _sd) * 0.6))
+				}
 			}
 			return _num;
 		}
@@ -94,7 +100,7 @@ function Swiper (_params) {
 		function judgeMove() {
 			if (_ed < _sd) {
 				if (judgeTouch(-_distance)) {
-					if (!_loop && _md === -(_li.length-1) * _distance) return returnP();
+					if (!_loop && _md === (-(_li.length-1) * _distance)) return returnP();
 					_index += 1;
 					slideMove(_md - _distance);
 					_md -= _distance;
@@ -132,7 +138,7 @@ function Swiper (_params) {
 			autoMove();
 			startAuto()
 		}
-		if (_autoPaly) startAuto();
+		if (_autoPaly && _li.length-1) startAuto();
 		_ul.addEventListener('touchstart', ev => {
 			[sTime, _t, _loopNum] = [new Date().getTime(), 0, _moveTime/1000*60]
 			noAnimation();
@@ -146,8 +152,13 @@ function Swiper (_params) {
 		});
 		_ul.addEventListener('touchend', () => {
 			eTime = new Date().getTime();
-			if (_eState !== _ed) judgeMove();
-			// console.log(`new:${_index}`);	//这里可以做触发回调
+			// 判断是否点击
+			if (_eState !== _ed) {
+				judgeMove();
+			}else {
+				console.log('执行');
+				returnP()
+			}
 			[_eState, _t] = [_ed, 0];
 		});
 	}
@@ -155,12 +166,12 @@ function Swiper (_params) {
 		let [_ul, _li] = [_div.querySelector('.swiper_list'), _div.querySelectorAll('.swiper_slider')];
 		if (_direction) {
 			for (let i = 0; i < _li.length; i++) {
-				_li[i].style.height = `${_h}px`;
+				_li[i].style.height = `${ _h }px`;
 			}
 		}else {
 			_ul.style.width = `${_w * _li.length}px`;
 			for (let i = 0; i < _li.length; i++) {
-				_li[i].style.width = `${_w}px`;
+				_li[i].style.width = `${ _w }px`;
 			}
 		}
 		touch(_div, _w, _h);
@@ -173,9 +184,9 @@ function Swiper (_params) {
 		_ul.insertBefore(_last, _li[0]);
 		_ul.appendChild(_first);
 		if (_direction) {
-			_ul.style.top = `${-_h}px`;
+			_ul.style.top = `${ -_h }px`;
 		}else {
-			_ul.style.left = `${-_w}px`;
+			_ul.style.left = `${ -_w }px`;
 		}
 		layout(_div, _w, _h)
 	}
