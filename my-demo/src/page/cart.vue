@@ -54,12 +54,7 @@ export default {
 		allChecked() {
 			let _all = true;
             this.cartData.cartList.forEach((item, index) => {
-                if (!item.isSelect) {
-                    _all = false
-                    this.cartData.select = false
-                }else {
-                    this.cartData.select = true
-                }
+                if (!item.isSelect) _all = false
             })
 			return _all;
 		}
@@ -98,6 +93,10 @@ export default {
             }
 		},
         buy () {
+			this.cartData.select = false
+			this.cartData.cartList.forEach((item, index) => {
+                if (item.isSelect) this.cartData.select = true
+            })
             if (!this.cartData.select) return this.$msg({ type: 'alert', text: '你还没选择商品呢~' });
         }
 	}

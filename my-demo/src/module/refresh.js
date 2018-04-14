@@ -1,6 +1,6 @@
 //	开始下拉
 function DropDownRefresh(params, fn, numFn) {
-    const rootNode = document.body.scrollTop === 0 ? document.documentElement : document.body;
+    const rootNode = document.body;
     let _el = params.el || 'body';
     let _page = document.querySelector(_el);
     let _max = params.maxRange || 100;
@@ -42,7 +42,6 @@ function DropDownRefresh(params, fn, numFn) {
         getAnimation(_page, 0.3);
         getAnimation(_titleBox, 0.3);
         if (_range > _max && _range > 1 && rootNode.scrollTop == 0) {
-            document.querySelector('html').style.overflowY = 'hidden';
             slideStyle(_page, _max);
             slideStyle(_titleBox, _max);
             outPutLayer();
@@ -56,7 +55,6 @@ function DropDownRefresh(params, fn, numFn) {
 // 结束下拉功能
 function RefreshEnd(el) {
     document.body.removeChild(document.querySelector('.refresh_bg'));
-    document.querySelector('html').style.overflowY = '';
     let [_page, _titleBox] = [document.querySelector(el), document.querySelector('.refresh_title')];
     function resetStyle(el) {
         el.style.WebkitTransition = '0.3s all';
