@@ -54,20 +54,13 @@ export default {
         position: fixed;
         width: 100%;
         height: 100vh;
+        opacity: 0;
     }
-    .page-next-enter{
+    .page-next-enter, .page-back-leave-active{
         transform: translateX(100%);
     }
-    .page-back-enter{
+    .page-back-enter, .page-next-leave-active{
         transform: translateX(-100%);
-    }
-    .page-back-leave-active{
-        opacity: 0;
-        transform: translateX(90%);
-    }
-    .page-next-leave-active{
-        opacity: 0;
-        transform: translateX(-90%);
     }
     .page-next-enter-active, .page-back-enter-active, .page-next-leave-active, .page-back-leave-active{ transition: .4s all; }
 </style>
