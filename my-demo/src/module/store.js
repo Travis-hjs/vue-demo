@@ -99,8 +99,7 @@ const state = {
                 id: 18,
                 price: '40.00',
                 text: '产品十九'
-            },
-            {
+            },{
                 id: 19,
                 price: '15.50',
                 text: '产品二十'

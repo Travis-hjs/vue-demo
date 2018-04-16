@@ -15,7 +15,7 @@ import Todo from './home/todo'
 export default {
 	data () {
 		return {
-			interval: true
+			interval: false
 		}
 	},
 	components: { List, Todo },
@@ -33,9 +33,9 @@ export default {
 		scrollBottom () {
 			if (View.getScrollTop() + View.getWindowHeight() == View.getScrollHeight()) {
                 // 阻止多次执行
-				if (!this.interval) return ;
-				this.interval = false;
-				this.$msg({ type: 'alert', text: '到达页面底部' }, () => this.interval = true)
+				if (this.interval) return ;
+				this.interval = true;
+				this.$msg({ type: 'alert', text: '到达页面底部' }, () => this.interval = false)
 			}
 		}
 	}
