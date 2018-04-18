@@ -54,13 +54,24 @@ export default {
         position: fixed;
         width: 100%;
         height: 100vh;
+        // backface-visibility: hidden;
+        // perspective: 1000;
+        // background-color: #fff;
+    }
+    // 第一种：安卓会卡
+    .page-next-enter{
+        transform: translate3d(100%, 0, 0);
+    }
+    .page-back-enter{
+        transform: translate3d(-100%, 0, 0);
+    }
+    .page-back-leave-active{
         opacity: 0;
+        transform: translate3d(90%, 0, 0);
     }
-    .page-next-enter, .page-back-leave-active{
-        transform: translateX(100%);
-    }
-    .page-back-enter, .page-next-leave-active{
-        transform: translateX(-100%);
+    .page-next-leave-active{
+        opacity: 0;
+        transform: translate3d(-90%, 0, 0);
     }
     .page-next-enter-active, .page-back-enter-active, .page-next-leave-active, .page-back-leave-active{ transition: .4s all; }
 </style>

@@ -35,7 +35,9 @@ export default {
                 // 阻止多次执行
 				if (this.interval) return ;
 				this.interval = true;
-				this.$msg({ type: 'alert', text: '到达页面底部' }, () => this.interval = false)
+				this.$msg({ type: 'alert', text: '到达页面底部' }, () => {
+					// this.interval = false
+				})
 			}
 		}
 	}
