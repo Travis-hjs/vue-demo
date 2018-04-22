@@ -23,7 +23,7 @@ function Prompts(params, Afn, Bfn) {
 	let _time = Number(params.time) || 1000;
 	let _div = document.createElement('div');
 	function output(_num, _html, fun) {
-		_div.className = 'layer_bg';
+		_div.className = 'prompts';
 		_div.appendChild(_html);
 		document.body.appendChild(_div);
 		_div.style.backgroundColor = 'rgba(0,0,0,'+_num+')';
