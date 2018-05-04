@@ -8,13 +8,14 @@
 </template>
 
 <script>
-import View from '@/module/viewport'
 import List from './home/list'
 import Todo from './home/todo'
 
 export default {
 	data () {
 		return {
+			// 距离底部触发的距离
+			distance: 100,
 			interval: false
 		}
 	},
@@ -31,12 +32,14 @@ export default {
 	},
 	methods: {
 		scrollBottom () {
-			if (View.getScrollTop() + View.getWindowHeight() == View.getScrollHeight()) {
+			let _scrollTop = document.documentElement.scrollTop === 0 ? document.body.scrollTop : document.documentElement.scrollTop;
+            let _scrollHeight = document.documentElement.scrollTop === 0 ? document.body.scrollHeight : document.documentElement.scrollHeight;
+			if (_scrollHeight-_scrollTop-this.distance <= window.innerHeight) {
                 // 阻止多次执行
 				if (this.interval) return ;
 				this.interval = true;
-				this.$msg({ type: 'alert', text: '到达页面底部' }, () => {
-					// this.interval = false
+				this.$msg({ type: 'confirm', text: '到达页面底部，点击确认继续判断滚动事件' }, () => {
+					this.interval = false
 				})
 			}
 		}

@@ -31,7 +31,7 @@ export default {
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
     header{
-        .flex(); width: 100%; height: .98rem; overflow: hidden; background-color: @textColor; position: fixed; top: 0; left: 0; z-index: 10; box-shadow: 0 0 20px 0 rgba(0,0,0,0.8);
+        .flex(); width: 100%; height: .98rem; overflow: hidden; background-color: @textColor; position: fixed; top: 0; left: 0; z-index: 10; box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
         span{ width: .9rem; .flex(); .vertical(); .center(); }
 		.aui-icon-left{ font-weight: 600; .standard(); color: #fff; }
 		h2{ .title(); color: #fff; text-align: center; .f(1); line-height: .9rem; }
