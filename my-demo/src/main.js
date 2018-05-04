@@ -3,12 +3,12 @@ import App from './App'
 import router from './router'
 import store from '@/module/store'
 import Ajax from '@/module/ajax'
-import Prompts from '@/module/prompts'
+import Msg from '@/module/prompts'
 
 Vue.config.productionTip = false
 // 定义全局的方法（ajax, prompts）
 Vue.prototype.$http = Ajax
-Vue.prototype.$msg = Prompts
+Vue.prototype.$msg = new Msg()
 // 监控分享路由链接
 router.beforeEach((to, from, next) => {
     let _url = window.location.href;

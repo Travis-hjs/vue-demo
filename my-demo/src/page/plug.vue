@@ -82,6 +82,7 @@ export default {
 	mounted () {
 		this.getBanner();
 		this.getRefresh()
+		console.log(this.$msg);
 	},
 	methods: {
 		getBanner () {
@@ -124,34 +125,37 @@ export default {
 		},
 		promptsBtn (num) {
 			if (num == 0) {
-				this.$msg({ type: 'alert', text: '这是一个提示框~' }, () => console.log('确认回调') )
+				this.$msg.alertMsg('这是一个提示框~', function () {
+					console.log('确认回调')
+				},'Hello')
 			}else if (num == 1) {
-				this.$msg({
-					type: 'confirm',
-					text: '这是一个确认提示框~'
-				}, () => console.log('确认回调'), () => console.log('取消回调') )
+				this.$msg.confirmMsg('这是一个操作提示框',function () {
+					console.log('点击了确认')
+				}, 'Hi~', function () {
+					console.log('点击了取消')
+				})
 			}else if (num == 2) {
-				this.$msg({ type: 'load', text: 'loading' })
+				this.$msg.loading();
 				setTimeout(() => {
-					this.$msg({ type: 'remove' })
+					this.$msg.remove()
 				},2000)
 			}else if (num == 3) {
-				this.$msg({ type: 'ball' })
+				this.$msg.loadBall();
 				setTimeout(() => {
-					this.$msg({ type: 'remove' })
+					this.$msg.remove()
 				},2000)
 			}else {
-				this.$msg({ type: 'toast', text: '这里是底部弹出文字', time: 2500 })
+				this.$msg.toast('底部弹出文字,2.5秒后消失', 2500)
 			}
 		},
 		getData () {
-			this.$msg({ type: 'load', text: '加载中..' })
+			this.$msg.loading('加载中..');
 			this.$http.post('store/v2.groups/product.html',{}, ret => {
-				this.$msg({ type: 'remove' })
+				this.$msg.remove()
 				// console.log(ret);
-				if (ret.code != 1) return this.$msg({ type: 'alert', text: ret.msg });
+				if (ret.code != 1) return this.$msg.alertMsg(ret.msg)
 				this.requestData = ret.data;
-			}, err => this.$msg({ type: 'toast' }))
+			}, err => this.$msg.toast(err, 1000))
 		},
 		openPicker () {
 			let that = this;
