@@ -80,9 +80,9 @@ export default {
 
 	},
 	mounted () {
-		this.getBanner();
+		this.getBanner()
 		this.getRefresh()
-		console.log(this.$msg);
+		// console.log(this.$msg);
 	},
 	methods: {
 		getBanner () {

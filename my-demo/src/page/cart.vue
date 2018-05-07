@@ -97,7 +97,7 @@ export default {
 			this.cartData.cartList.forEach((item, index) => {
                 if (item.isSelect) this.cartData.select = true
             })
-            if (!this.cartData.select) return this.$msg({ type: 'alert', text: '你还没选择商品呢~' });
+            if (!this.cartData.select) return this.$msg.alertMsg('你还没选择商品呢~')
         }
 	}
 }

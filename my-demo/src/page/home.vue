@@ -1,7 +1,8 @@
 <template lang="html">
 	<div class="home">
-		<h2>todo-list（props传参）</h2>
+		<h2>todo-list & props传参</h2>
 		<todo></todo>
+		<router-link to="" tag="div" class="props"><i class="aui-iconfont aui-icon-forward"></i>props传参-组件通讯</router-link>
 		<h2>过滤筛选</h2>
 		<list></list>
 	</div>
@@ -38,7 +39,7 @@ export default {
                 // 阻止多次执行
 				if (this.interval) return ;
 				this.interval = true;
-				this.$msg({ type: 'confirm', text: '到达页面底部，点击确认继续判断滚动事件' }, () => {
+				this.$msg.confirmMsg('到达页面底部，点击确认继续判断滚动事件', () => {
 					this.interval = false
 				})
 			}
@@ -51,5 +52,9 @@ export default {
 	@import "../../static/style/base.less";
 	.home{
 		h2{ .title(); color: @themeColor; line-height: .88rem; text-indent: .3rem; }
+		.props{ 
+			width: 50%; height: .8rem; border-radius: .4rem; background-color: #e3b770; .standard(); color: #fff; margin: .3rem auto 0; position: relative; .flex(); .vertical(); .center(); 
+			.aui-icon-forward{ color: #fff; margin-right: .1rem; transform: translateY(.05rem) }	
+		}
 	}
 </style>

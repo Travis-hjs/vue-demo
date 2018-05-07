@@ -30,7 +30,7 @@ export default {
 			// console.log(this.msgName)
 		},
 		chlidIput() {
-			if (!this.chlidMsg) return this.$msg({ type: 'alert', text: '输入不能为空' })
+			if (!this.chlidMsg) return this.$msg.alertMsg('输入不能为空') 
 			this.$emit('chllidFun', this.chlidMsg)
 			this.chlidMsg = ''
 		}

@@ -48,7 +48,7 @@ export default {
 	},
 	methods: {
         addItem() {
-			if (!this.newItem) return this.$msg({ type: 'alert', text: '输入不能为空' })
+			if (!this.newItem) return this.$msg.alertMsg('输入不能为空~')
 			this.lists.push({
 				text: this.newItem,
 				show: true
@@ -59,11 +59,11 @@ export default {
 			this.lists.splice(index, 1)
 		},
         removeFirst() {
-            if (!this.lists.length) return this.$msg({ type: 'alert', text: '当前没有可以删除的列表' })
+            if (!this.lists.length) return this.$msg.alertMsg('当前没有可以删除的列表') 
 			this.lists.shift()
 		},
 		removeLast() {
-            if (!this.lists.length) return this.$msg({ type: 'alert', text: '当前没有可以删除的列表' })
+            if (!this.lists.length) return this.$msg.alertMsg('当前没有可以删除的列表') 
 			this.lists.pop()
 		},
         listenToBoy(childMsg) {

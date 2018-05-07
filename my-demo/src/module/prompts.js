@@ -69,7 +69,7 @@ Prompts.prototype = {
         _module.innerHTML = '<div></div><p>'+_text+'</p>';
         this.output(_div, 0, _module);
     },
-    toast (_text = 'toast', _time, fn) {
+    toast (_text = 'toast', _time = 1500, fn) {
         let _module = document.createElement('div');
         _module.className = 'itoast';
         _module.textContent = _text;

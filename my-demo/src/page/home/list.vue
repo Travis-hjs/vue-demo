@@ -113,8 +113,8 @@ export default {
             // 重置一下商品数据
 			this.listData.queues = this.listData.goodsList
 			let [_min, _max] = [Number(this.minNum), Number(this.maxNum)]
-			if (!(_min && _max)) return this.$msg({ type: 'toast', text: '请输入大于零的价格' })
-			if (!(_min < _max)) return this.$msg({ type: 'toast', text: '最大价格必需大于最小价格' })
+			if (!(_min && _max)) return this.$msg.toast('请输入大于零的价格')
+			if (!(_min < _max)) return this.$msg.toast('最大价格必需大于最小价格')
 			this.listData.queues = this.listData.queues.filter((item, index, array) => {
 				return (item.price >= _min && item.price <= _max);
             });
