@@ -35,7 +35,7 @@ export default {
 	    window.removeEventListener('scroll', this.scrollBottom)
 	},
 	methods: {
-		// 组件传过来的接受事件函数
+		// 接收子组件传过来的参数
 		skillShow (_parms) {
 			this.skillState = _parms
 		},
@@ -59,8 +59,8 @@ export default {
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
 	.home{
-		.skill_btn{ 
-			width: 100%; padding: 0 .3rem; box-sizing: border-box; height: .8rem; .flex(); .vertical(); .standard(); color: @textColor; 
+		.skill_btn{
+			width: 100%; padding: 0 .3rem; box-sizing: border-box; height: .8rem; .flex(); .vertical(); .standard(); color: @textColor;
 			.aui-icon-info{ font-size: .32rem; color: @textColor; margin-left: .1rem; font-weight: 600; }
 		}
 		h2{ .title(); color: @themeColor; line-height: .88rem; text-indent: .3rem; }
