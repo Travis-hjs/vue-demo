@@ -1,14 +1,16 @@
 <template lang="html">
 	<div class="home">
+		<skill v-if="skillState" @skillFn="skillShow"></skill>
+		<div class="skill_btn" @click="skillState = true">路径小技巧<i class="aui-iconfont aui-icon-info"></i></div>
 		<h2>todo-list & props传参</h2>
 		<todo></todo>
-		<router-link to="" tag="div" class="props"><i class="aui-iconfont aui-icon-forward"></i>props传参-组件通讯</router-link>
 		<h2>过滤筛选</h2>
 		<list></list>
 	</div>
 </template>
 
 <script>
+import Skill from './home/skill'
 import List from './home/list'
 import Todo from './home/todo'
 
@@ -17,10 +19,11 @@ export default {
 		return {
 			// 距离底部触发的距离
 			distance: 100,
-			interval: false
+			interval: false,
+			skillState: false
 		}
 	},
-	components: { List, Todo },
+	components: { List, Todo, Skill },
 	created () {
 
 	},
@@ -32,6 +35,11 @@ export default {
 	    window.removeEventListener('scroll', this.scrollBottom)
 	},
 	methods: {
+		// 组件传过来的接受事件函数
+		skillShow (_parms) {
+			this.skillState = _parms
+		},
+		// 监听滚动条事件
 		scrollBottom () {
 			let _scrollTop = document.documentElement.scrollTop === 0 ? document.body.scrollTop : document.documentElement.scrollTop;
             let _scrollHeight = document.documentElement.scrollTop === 0 ? document.body.scrollHeight : document.documentElement.scrollHeight;
@@ -51,10 +59,10 @@ export default {
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
 	.home{
-		h2{ .title(); color: @themeColor; line-height: .88rem; text-indent: .3rem; }
-		.props{ 
-			width: 50%; height: .8rem; border-radius: .4rem; background-color: #e3b770; .standard(); color: #fff; margin: .3rem auto 0; position: relative; .flex(); .vertical(); .center(); 
-			.aui-icon-forward{ color: #fff; margin-right: .1rem; transform: translateY(.05rem) }	
+		.skill_btn{ 
+			width: 100%; padding: 0 .3rem; box-sizing: border-box; height: .8rem; .flex(); .vertical(); .standard(); color: @textColor; 
+			.aui-icon-info{ font-size: .32rem; color: @textColor; margin-left: .1rem; font-weight: 600; }
 		}
+		h2{ .title(); color: @themeColor; line-height: .88rem; text-indent: .3rem; }
 	}
 </style>

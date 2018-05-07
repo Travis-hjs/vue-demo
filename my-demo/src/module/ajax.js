@@ -5,8 +5,10 @@
 	或者
 	_img = _img.replace(/\+/g, "%2B").replace(/\&/g, "%26")
 */
-export default {
-	website: 'http://yinshimei.data.cuci.cc/',
+class Ajax {
+	constructor () {
+		this.website = 'http://yinshimei.data.cuci.cc/'
+	}
 	post (url, sendData, successHandler, errorHandler) {
 		var _data = '';
 		for (var key in sendData) {
@@ -39,7 +41,7 @@ export default {
 				}
 			}
 		}
-	},
+	}
 	get (url, sendData, successHandler, errorHandler) {
 		var _data = '';
 		for (var key in sendData) {
@@ -68,3 +70,4 @@ export default {
 		}
 	}
 }
+export default Ajax
