@@ -1,22 +1,7 @@
 <template lang="html">
 	<div class="plug">
-		<!-- 下拉头部状态盒子 -->
-		<div class="refresh_title">
-			<!-- 旋转的圈圈 -->
-            <div class="preloader preloader_hover">
-                <span class="preloader-inner">
-                    <span class="preloader-inner-gap"></span>
-                    <span class="preloader-inner-left">
-                        <span class="preloader-inner-half-circle"></span>
-                    </span>
-                    <span class="preloader-inner-right">
-                        <span class="preloader-inner-half-circle"></span>
-                    </span>
-                </span>
-            </div>
-		</div>
 		<h2>轮播图</h2>
-		<span class="notes">has-loop</span>
+		<span class="notes">loop</span>
 		<div class="swiper loop">
 			<ul class="swiper_list">
 				<li class="swiper_slider" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
@@ -51,7 +36,7 @@
 
 <script>
 import { iosProvinces, iosCitys, iosCountys } from '@/module/city'
-import { DropDownRefresh, RefreshEnd } from '@/module/refresh'
+import Refresh from '@/module/refresh'
 import Picker from 'iosselect'
 import Swiper from '@/module/swiper'
 
@@ -84,6 +69,10 @@ export default {
 		this.getRefresh()
 		// console.log(this.$msg);
 	},
+	beforeDestroy () {
+		let _title = document.querySelector('.refresh_title')
+		_title.parentNode.removeChild(_title)
+	},
 	methods: {
 		getBanner () {
 			new Swiper({
@@ -109,19 +98,18 @@ export default {
 			});
 		},
 		getRefresh () {
-			new DropDownRefresh({
-                el: '.plug',
-                maxRange: 100
-            }, function () {
-                console.log('成功下拉');
-				document.querySelector('.preloader').classList.remove('preloader_hover');
-                setTimeout(() => {
-                    new RefreshEnd('.plug')
-					document.querySelector('.preloader').classList.add('preloader_hover');
-                },2000)
-            }, function(num){
-                // console.log(`滑动的距离：${ num }`);
-            });
+			setTimeout(() => {
+				let _Ddr = new Refresh('.plug');
+				_Ddr.start({
+					height: 100,
+					padding: document.querySelector('nav').offsetHeight + 4
+				}, () => {
+					console.log('下拉成功');
+					setTimeout(() => {
+						_Ddr.end();
+					},2000)
+				})
+			},500)
 		},
 		promptsBtn (num) {
 			if (num == 0) {
@@ -180,16 +168,15 @@ export default {
 	}
 }
 </script>
-
 <style>
-	.refresh_bg{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0); z-index: 100; }
+	@import "../../static/style/refresh.css";
+	@import "../../static/style/loading.css";
 </style>
 <style lang="less" scoped>
 	@import "../../static/style/base.less";
-	@import "../../static/style/loading.css";
 	.plug{
 		h2{ .title(); line-height: 1rem; text-indent: .3rem; color: @themeColor; }
-		.notes{ .label(); color: @fadeColor; line-height: .6rem; text-indent: .3rem; }
+		.notes{ .label(); color: @fadeColor; line-height: .7rem; text-indent: .3rem; }
 		.swiper{
 			width: 100%; height: 4rem; position: relative; background-color: #eee; overflow: hidden;
 			.swiper_list{ overflow: hidden; position: relative; width: 100%; }
@@ -208,18 +195,5 @@ export default {
 			display: block; width: 6.9rem; height: .88rem; background-color: @textColor; box-sizing: border-box; margin: 0 auto; color: #fff; text-align: center; margin-bottom: .4rem;
 			&::-webkit-input-placeholder{ color: @themeColor; }
 		}
-		/* 下拉提示盒子样式 */
-		.refresh_title{
-			position: fixed;
-			width: 100%;
-			top: -80px;
-			left: 0;
-			height: 80px;
-			z-index: 99;
-			display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap;
-			-webkit-box-align: center; -webkit-align-items: center; align-items: center;
-			-webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
-		}
-		.preloader_hover{ background-color: orange; border-radius: 50%; border: 2px solid orange; }
 	}
 </style>
