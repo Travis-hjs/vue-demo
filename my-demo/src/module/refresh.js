@@ -17,7 +17,7 @@ class Ddr {
         this._pagetitle.style.WebkitTransform = this._pagetitle.style.transform = `translate3d(0px, ${ _num }px, 0px)`;
     }
     start (_parms, fn, numFn) {
-        let rootNode = document.body.scrollTop,
+        let rootNode = 0,
             _icon = this._pagetitle.querySelector('.icon_refresh'),
             _loading = this._pagetitle.querySelector('.preloader'),
             _max = _parms.height || 100,
@@ -33,6 +33,7 @@ class Ddr {
             this.getAnimation(0);
         });
         this._page.addEventListener('touchmove', ev => {
+            rootNode = document.documentElement.scrollTop === 0 ? document.body.scrollTop : document.documentElement.scrollTop;
             if (rootNode != 0) return;
             _ed = ev.touches[0].pageY;
             _range = Math.floor(_ed-_sd);
