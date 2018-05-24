@@ -1,6 +1,6 @@
 class Ddr {
     constructor (el) {
-        if (!el) return console.log('没有可下拉的元素');
+        if (!el) return console.warn('没有可下拉的元素');
         this._page = document.querySelector(el);
         this._layer = document.createElement('div');
         this._layer.style.cssText = 'position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0);z-index: 100;';
@@ -57,6 +57,7 @@ class Ddr {
             if (_range > _max && _range > 1 && rootNode == 0) {
                 this.setStyle(_max);
                 document.body.appendChild(this._layer);
+                this._layer.ontouchmove = e => e.preventDefault();
                 if (typeof fn === 'function') fn.call(this);
             }else {
                 this.setStyle(0);

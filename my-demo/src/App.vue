@@ -74,4 +74,7 @@ export default {
         transform: translate3d(-90%, 0, 0);
     }
     .page-next-enter-active, .page-back-enter-active, .page-next-leave-active, .page-back-leave-active{ transition: .4s all; }
+    // 水波纹
+    .ripple_btn{ position: relative; cursor: pointer; }
+    .ripple_btn canvas{ opacity: 0.25; position: absolute; top: 0; left: 0; transition: .2s all; -webkit-transition: .2s all }
 </style>

@@ -2,7 +2,7 @@
 	<div class="todo-child">
         <h2>{{ title }}</h2>
         <p>父组件传过来的值：{{ fatherData }}</p>
-        <span @click="clickMe()">{{ text }}</span>
+        <span @click="clickMe" onclick="ripple(this)" class="ripple_btn" data-color="#fbe8ca">{{ text }}</span>
         <input v-model.trim="chlidMsg" @keyup.enter="chlidIput" type="text" value="" placeholder="输入摁回车将子组件的参数传到父组件去">
 	</div>
 </template>

@@ -8,8 +8,8 @@
             </li>
         </ul>
         <div class="todo_btn">
-            <span @click="removeFirst" data-opacity>删除第一条</span>
-            <span @click="removeLast" data-opacity>删除最后一条</span>
+            <span @click="removeFirst" onclick="ripple(this)" class="ripple_btn" data-color="#fbe8ca">删除第一条</span>
+            <span @click="removeLast" onclick="ripple(this)" class="ripple_btn" data-color="#fbe8ca">删除最后一条</span>
         </div>
         <div class="title">
             <p>子组件传过来的值: {{ childData }}</p>

@@ -4,9 +4,10 @@ import router from './router'
 import store from '@/module/store'
 import Http from '@/module/ajax'
 import Msg from '@/module/prompts'
+import Ripple from '@/module/ripple'
 
 Vue.config.productionTip = false
-// 定义全局的方法（ajax, prompts）
+// 定义Vue全局的方法（ajax, prompts）
 Vue.prototype.$http = new Http()
 Vue.prototype.$msg = new Msg()
 // 监控分享路由链接
@@ -24,7 +25,7 @@ window.addEventListener('popstate', e => {
     router.isBack = true
     // console.log(router.isBack);
 });
-
+window.ripple = Ripple
 new Vue({
     el: '#app',
     router,

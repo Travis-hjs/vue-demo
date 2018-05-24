@@ -1,6 +1,6 @@
 <template lang="html">
 	<header>
-        <span @click="goBack" data-spread><i class="aui-iconfont aui-icon-left"></i></span>
+        <span onclick="ripple(this)" @click="goBack" class="ripple_btn"><i class="aui-iconfont aui-icon-left"></i></span>
         <h2>{{ $route.meta.title }}</h2>
         <span>{{ rightText }}</span>
     </header>

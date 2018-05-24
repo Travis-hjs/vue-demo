@@ -22,7 +22,7 @@
             <div :class="['checked_btn',{ check_on: allChecked }]" @click="allSelect"></div>
             <p>全选</p>
             <div class="total">总计：<i>￥{{ totalPrice }}</i></div>
-            <div class="buy_btn" data-opacity @click="buy">立即购买</div>
+            <div class="buy_btn ripple_btn" onclick="ripple(this)" @click="buy">立即购买</div>
         </footer>
 	</div>
 </template>

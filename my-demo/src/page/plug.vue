@@ -24,10 +24,10 @@
 		</div>
 		<h2>交互提示</h2>
 		<ul class="btn_list">
-			<li v-for="(item, index) in btnList" :key="index" data-spread @click="promptsBtn(index)">{{ item }}</li>
+			<li v-for="(item, index) in btnList" :key="index" class="ripple_btn" @click="promptsBtn(index)" onclick="ripple(this)">{{ item }}</li>
 		</ul>
 		<h2>Ajax-请求</h2>
-		<div class="bottom_btn" data-spread @click="getData">发送一个post请求</div>
+		<div class="bottom_btn ripple_btn" data-color="#fbe8ca" onclick="ripple(this)" @click="getData">发送一个post请求</div>
 		<div class="request_content">{{ requestData }}</div>
 		<h2>Picker 选择器</h2>
 		<input class="input" data-opacity type="text" readonly placeholder="请选择城市~" @click="openPicker" v-model="pickerData">
@@ -67,7 +67,7 @@ export default {
 	mounted () {
 		this.getBanner()
 		this.getRefresh()
-		// console.log(this.$msg);
+		// console.log(ripple);
 	},
 	beforeDestroy () {
 		let _title = document.querySelector('.refresh_title')
@@ -98,7 +98,7 @@ export default {
 			});
 		},
 		getRefresh () {
-			setTimeout(() => {
+			// setTimeout(() => {
 				let _Ddr = new Refresh('.plug');
 				_Ddr.start({
 					height: 100,
@@ -109,7 +109,7 @@ export default {
 						_Ddr.end();
 					},2000)
 				})
-			},500)
+			// },100)
 		},
 		promptsBtn (num) {
 			if (num == 0) {

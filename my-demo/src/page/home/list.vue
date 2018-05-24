@@ -1,7 +1,7 @@
 <template lang="html">
 	<div class="filter">
 		<nav>
-            <li v-for="(item, index) in listData.menus" :key="item.id" :class="{ li_active: item.id == listData.active }" @click="menuFun(item.id)">{{ item.value }}</li>
+            <li v-for="(item, index) in listData.menus" :key="item.id" :class="[{ li_active: item.id == listData.active }, 'ripple_btn']" onclick="ripple(this)" @click="menuFun(item.id)">{{ item.value }}</li>
             <div class="line"></div>
         </nav>
         <div class="filter_box">
@@ -9,7 +9,7 @@
 			<i>——</i>
 			<input type="number" name="" value="" v-model.trim="maxNum" placeholder="￥最大价格">
 		</div>
-		<span class="select_btn" @click="dataFilter">查询</span>
+		<span class="select_btn ripple_btn" @click="dataFilter" data-color="#fbe8ca" onclick="ripple(this)">查询</span>
 		<input type="text" name="" value="" v-model.trim="listData.seachText" placeholder="输入价格或产品模糊搜索">
 		<transition-group tag="ul" name="liMove" class="shop_ul">
 			<li v-for="(shop, key) in searchData" :key="shop.id">
