@@ -142,13 +142,13 @@ export default {
     		i{ .f(1); text-align: center; font-size: .36rem; line-height: 40px; }
     	}
     	.select_btn{
-            width: 140px; height: 40px; font-size: 14px; line-height: 40px; color: #fff; background-color: @themeColor; text-align: center; margin: 0 auto 10px; border-radius: 19px;
+            width: 140px; height: 40px; font-size: 14px; display: block; line-height: 40px; color: #fff; background-color: @themeColor; text-align: center; margin: 0 auto 10px; border-radius: 19px;
             &:active{ opacity: 0.8; }
         }
     	.shop_ul{
     		width: 100%; overflow: hidden; position: relative;
-    		li{ width: 45.35%; margin-left: 3.1%; margin-bottom: 3.1%; float: left; box-shadow: 0 0 15px 0 rgba(0,0,0,0.2); transition: 1s all; }
-    		span{ width: 100%; padding: 50% 0; background-color: #eee; margin-bottom: 10px; }
+    		li{ display: block; width: 45.35%; margin-left: 3.1%; margin-bottom: 3.1%; float: left; box-shadow: 0 0 15px 0 rgba(0,0,0,0.2); transition: 1s all; }
+    		span{ width: 100%; padding: 50% 0; display: block; background-color: #eee; margin-bottom: 10px; }
     		h2{ font-size: 16px; font-weight: 400; text-indent: 10px; color: #f90667; }
     		p{ color: @fadeColor; font-size: 14px; text-indent: 10px; }
     		i{ font-size: 12px; }

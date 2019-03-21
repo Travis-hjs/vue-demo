@@ -176,7 +176,7 @@ export default {
 	@import "../../static/style/base.less";
 	.plug{
 		h2{ .title(); line-height: 1rem; text-indent: .3rem; color: @themeColor; }
-		.notes{ .label(); color: @fadeColor; line-height: .7rem; text-indent: .3rem; }
+		.notes{ .label(); color: @fadeColor; line-height: .7rem; text-indent: .3rem; display: block; }
 		.swiper{
 			width: 100%; height: 4rem; position: relative; background-color: #eee; overflow: hidden;
 			.swiper_list{ overflow: hidden; position: relative; width: 100%; }
