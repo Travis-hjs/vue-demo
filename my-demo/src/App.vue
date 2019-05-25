@@ -38,8 +38,8 @@ export default {
     .content{ padding-top: 1.2rem; }
     /* 轮播图圆点样式 */
     .swiper .swiper_pagination{ position: absolute; left: 50%; bottom: 8px; height: 8px; transform: translateX(-50%); }
-    .swiper .swiper_btn{ float: left; margin-left: 8px; width: 8px; height: 8px; background-color: rgba(0,0,0,0.3); border: solid 1px #fff; border-radius: 50%; }
-    .swiper .swiper_btn_active{ background-color: #fff; border-color: @textColor; }
+    .swiper .swiper_dot{ float: left; margin-left: 8px; width: 8px; height: 8px; background-color: rgba(0,0,0,0.3); border: solid 1px #fff; border-radius: 50%; }
+    .swiper .swiper_dot_active{ background-color: #fff; border-color: @textColor; }
     /* 底部长条按钮 */
     .bottom_btn{ width: 6.9rem; height: .88rem; .standard(); color: #fff; background-color: @themeColor; border-radius: .08rem; margin: 0 auto; text-align: center; line-height: .88rem; }
     /* vue动画 */

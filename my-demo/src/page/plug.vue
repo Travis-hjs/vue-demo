@@ -4,21 +4,21 @@
 		<span class="notes">loop</span>
 		<div class="swiper loop">
 			<ul class="swiper_list">
-				<li class="swiper_slider" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
+				<li class="swiper_item" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
 			</ul>
 			<div class="swiper_pagination"></div>
 		</div>
 		<span class="notes">no-loop</span>
 		<div class="swiper noLoop">
 			<ul class="swiper_list">
-				<li class="swiper_slider" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
+				<li class="swiper_item" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
 			</ul>
 			<div class="swiper_pagination"></div>
 		</div>
 		<span class="notes">transformY</span>
 		<div class="swiper transformY">
 			<ul class="swiper_list">
-				<li class="swiper_slider" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
+				<li class="swiper_item" v-for="(item, index) in banners" :key="index" :style="{ backgroundImage: `url(${ item.image })` }"></li>
 			</ul>
 			<div class="swiper_pagination"></div>
 		</div>
@@ -36,9 +36,11 @@
 
 <script>
 import { iosProvinces, iosCitys, iosCountys } from '@/module/city'
-import Refresh from '@/module/refresh'
+import DropDownRefresh from '../module/refresh'
 import Picker from 'iosselect'
-import Swiper from '@/module/swiper'
+import swiper from '../module/swiper'
+import dialog from '../module/prompts'
+import { baseRequest } from '../module/ajax';
 
 export default {
 	data () {
@@ -65,85 +67,97 @@ export default {
 
 	},
 	mounted () {
-		this.getBanner()
-		this.getRefresh()
-		// console.log(ripple);
+		this.getBanner();
+		this.getRefresh();
 	},
 	beforeDestroy () {
-		let _title = document.querySelector('.refresh_title')
-		_title.parentNode.removeChild(_title)
+		let title = document.querySelector('.refresh_title');
+		title.parentNode.removeChild(title);
 	},
 	methods: {
 		getBanner () {
-			new Swiper({
+			swiper({
 				el: '.loop',
 				pagination: true,
 				autoPaly: true,
 				interval: 5000,
 				loop: true
 			});
-			new Swiper({
+			swiper({
 				el: '.noLoop',
 				pagination: true,
 				autoPaly: true,
 				interval: 5000
 			});
-			new Swiper({
+			swiper({
 				el: '.transformY',
 				pagination: true,
 				autoPaly: true,
 				interval: 5000,
 				loop: true,
-				direction: true
+				vertical: true
 			});
 		},
 		getRefresh () {
 			// setTimeout(() => {
-				let _Ddr = new Refresh('.plug');
-				_Ddr.start({
+				let Ddr = new DropDownRefresh('.plug');
+				Ddr.start({
 					height: 100,
 					padding: document.querySelector('nav').offsetHeight + 4
 				}, () => {
 					console.log('下拉成功');
 					setTimeout(() => {
-						_Ddr.end();
+						Ddr.end();
 					},2000)
 				})
 			// },100)
 		},
 		promptsBtn (num) {
 			if (num == 0) {
-				this.$msg.alertMsg('这是一个提示框~', function () {
+				dialog.alertMsg('这是一个提示框~', function () {
 					console.log('确认回调')
 				},'Hello')
 			}else if (num == 1) {
-				this.$msg.confirmMsg('这是一个操作提示框',function () {
+				dialog.confirmMsg('这是一个操作提示框',function () {
 					console.log('点击了确认')
 				}, 'Hi~', function () {
 					console.log('点击了取消')
 				})
 			}else if (num == 2) {
-				this.$msg.loading();
+				dialog.loading();
 				setTimeout(() => {
-					this.$msg.remove()
+					dialog.remove()
 				},2000)
 			}else if (num == 3) {
-				this.$msg.loadBall();
+				dialog.loadBall();
 				setTimeout(() => {
-					this.$msg.remove()
+					dialog.remove()
 				},2000)
 			}else {
-				this.$msg.toast('底部弹出文字,2.5秒后消失', 2500)
+				dialog.toast('底部弹出文字,2.5秒后消失', 2500)
 			}
 		},
 		getData () {
-			this.$msg.loading('加载中..');
-			this.$http.post('store/v2.groups/product.html',{}, ret => {
-				this.$msg.remove()
-				// console.log(ret);
-				if (ret.code != 1) return this.$msg.alertMsg(ret.msg)
-				this.requestData = ret.data;
-			}, err => this.$msg.toast(err, 1000))
+            dialog.loading('加载中..');
+            let send_data = {
+                appkey: 'e2fb20ea3f3df33310788a4247834c93',
+                token: '2a11d6d67a8b8196afbcefbac3e0a573',
+                page: '1',
+                limit: '7',
+                longitude: '113.30764968',
+                latitude: '23.1200491',
+                sort: 'distance',
+                order: 'asc',
+                keyword: ''
+            }
+            baseRequest('post', 'http://che.qihao.lzei.com/api/app/parking', send_data, res => {
+                dialog.remove();
+                console.log(res);
+                this.requestData.content = JSON.stringify(res);
+            }, err => {
+                dialog.remove();
+                dialog.toast(err.message, 1000);
+            });
 		},
 		openPicker () {
 			let that = this;
@@ -180,10 +194,10 @@ export default {
 		.swiper{
 			width: 100%; height: 4rem; position: relative; background-color: #eee; overflow: hidden;
 			.swiper_list{ overflow: hidden; position: relative; width: 100%; }
-			.swiper_slider{ height: 4rem; float: left; width: 100%; text-align: center; background-size: cover; background-position: center center; }
+			.swiper_item{ height: 4rem; float: left; width: 100%; text-align: center; background-size: cover; background-position: center center; }
 		}
 		.transformY{
-			.swiper_slider{ height: 4rem; float: none; width: 100%; }
+			.swiper_item{ height: 4rem; float: none; width: 100%; }
 		}
 		.btn_list{
 			padding: 0 .3rem;

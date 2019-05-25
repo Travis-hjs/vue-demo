@@ -1,85 +1,136 @@
-class Prompts {
-    createNode () {
-        let _box = document.createElement('div');
-        _box.className = 'prompts';
-        return _box;
+/** 消息交互组件 */
+class Dialogs {
+    constructor() {}
+    /** 创建整体 */
+    createNode() {
+        let el = document.createElement('div');
+        el.className = 'prompts';
+        return el;
     }
-    output (_box, _num, _html, fun){
-        _box.appendChild(_html);
-        document.body.appendChild(_box);
-        _box.style.backgroundColor = 'rgba(0,0,0,'+_num+')';
+
+    /**
+     * 输出节点
+     * @param {Element} el 
+     * @param {number} num 透明度
+     * @param {Element} childNode 插入节点 
+     * @param {Function} callback 回调
+     */
+    output(el, num, childNode, callback) {
+        el.appendChild(childNode);
+        document.body.appendChild(el);
+        el.style.backgroundColor = 'rgba(0,0,0,' + num + ')';
         setTimeout(() => {
-            _box.style.opacity = 1;
-            if (typeof fun === 'function') fun.call(this);
+            el.style.opacity = 1;
+            if (typeof callback === 'function') callback.call(this);
         }, 20);
     }
-    removeThis (_box) {
-        _box.style.opacity = 0;
-        setTimeout(() => document.body.removeChild(_box), 241);
+
+    /**
+     * 清除节点
+     * @param {Element} el 清除的节点
+     */
+    removeThis(el) {
+        el.style.opacity = 0;
+        setTimeout(() => el.parentNode.removeChild(el), 241);
     }
-    remove () {
-        let _prompts = document.getElementsByClassName('prompts');
-        if (!_prompts.length) return;
-        for (let i = 0; i < _prompts.length; i++) this.removeThis(_prompts[i]);
+
+    /** 清除当前组件节点 */
+    remove() {
+        let layer = document.getElementsByClassName('prompts');
+        if (!layer.length) return;
+        for (let i = 0; i < layer.length; i++) this.removeThis(layer[i]);
     }
-    alertMsg (_text = '内容', fn, _title = '提示') {
-        let [_div, _module, _btn] = [this.createNode(), document.createElement('div'), document.createElement('div')];
-        [_module.className, _btn.className, _btn.textContent] = ['prompt', 'callback_btn', '确认'];
-        _module.innerHTML = '<h2>'+_title+'</h2><div class="text_box"><p>'+_text+'</p></div>';
-        _module.appendChild(_btn);
-        this.output(_div, .4, _module, () => {
-            _module.classList.add('scale_in');
-            _btn.addEventListener('click', () => {
-                if (typeof fn === 'function') fn.call(this);
-                _module.classList.add('scale_out');
-                this.removeThis(_div);
+
+    /**
+     * 确认提示框
+     * @param {string} text 提示内容
+     * @param {Function} callback 确认回调
+     * @param {string} title 提示标题
+     */
+    alertMsg(text = '内容', callback, title = '提示') {
+        let layer = this.createNode(), box = document.createElement('div'), button = document.createElement('div');
+        [box.className, button.className, button.textContent] = ['prompt', 'callback_btn', '确认'];
+        box.innerHTML = '<h2>' + title + '</h2><div class="text_box"><p>' + text + '</p></div>';
+        box.appendChild(button);
+        this.output(layer, .4, box, () => {
+            box.classList.add('scale_in');
+            button.addEventListener('click', () => {
+                if (typeof callback === 'function') callback.call(this);
+                box.classList.add('scale_out');
+                this.removeThis(layer);
             });
         });
     }
-    confirmMsg (_text = '内容', Afn, _title = '提示', Bfn) {
-        let [_div, _module, _Lbtn, _Rbtn] = [this.createNode(), document.createElement('div'),document.createElement('div'),document.createElement('div')];
-        [_module.className, _Lbtn.className, _Lbtn.textContent, _Rbtn.className, _Rbtn.textContent] = ['confirm', 'callback_btn','取消','callback_btn callback_right','确认'];
-        _module.innerHTML = '<h2>'+_title+'</h2><div class="text_box"><p>'+_text+'</p></div>';
-        _module.appendChild(_Lbtn);
-        _module.appendChild(_Rbtn);
-        this.output(_div, .4, _module, () => {
-            _module.classList.add('scale_in');
-            _Rbtn.addEventListener('click', () => {
-                if (typeof Afn === 'function') Afn.call(this);
-                _module.classList.add('scale_out');
-                this.removeThis(_div);
+
+    /**
+     * 确认取消提示框
+     * @param {string} text 提示内容
+     * @param {Function} success 确认回调
+     * @param {string} title 提示标题
+     * @param {Function} cancel 取消回调
+     */
+    confirmMsg(text = '内容', success, title = '提示', cancel) {
+        let layer = this.createNode(), box = document.createElement('div'), btn_left = document.createElement('div'), btn_right = document.createElement('div');
+        [box.className, btn_left.className, btn_left.textContent, btn_right.className, btn_right.textContent] = ['confirm', 'callback_btn', '取消', 'callback_btn callback_right', '确认'];
+        box.innerHTML = '<h2>' + title + '</h2><div class="text_box"><p>' + text + '</p></div>';
+        box.appendChild(btn_left);
+        box.appendChild(btn_right);
+        this.output(layer, .4, box, () => {
+            box.classList.add('scale_in');
+            btn_right.addEventListener('click', () => {
+                if (typeof success === 'function') success.call(this);
+                box.classList.add('scale_out');
+                this.removeThis(layer);
             });
-            _Lbtn.addEventListener('click', () => {
-                if (typeof Bfn === 'function') Bfn.call(this);
-                _module.classList.add('scale_out');
-                this.removeThis(_div);
+            btn_left.addEventListener('click', () => {
+                if (typeof cancel === 'function') cancel.call(this);
+                box.classList.add('scale_out');
+                this.removeThis(layer);
             });
         });
     }
-    loadBall () {
-        let [_div, _module] = [this.createNode(), document.createElement('div')];
-        _module.className = 'loding_ball';
-        _module.innerHTML = '<div></div><div></div><div></div>';
-        this.output(_div, .4, _module);
+
+    /** 显示加载动画球 */
+    loadBall() {
+        let layer = this.createNode(), box = document.createElement('div');
+        box.className = 'loding_ball';
+        box.innerHTML = '<div></div><div></div><div></div>';
+        this.output(layer, .4, box);
     }
-    loading (_text = 'loading') {
-        let [_div, _module] = [this.createNode(), document.createElement('div')];
-        _module.className = 'loading_box';
-        _module.innerHTML = '<div></div><p>'+_text+'</p>';
-        this.output(_div, 0, _module);
+
+    /**
+     * 显示加载中
+     * @param {string} text 加载内容
+     */
+    loading(text = 'loading') {
+        let layer = this.createNode(), box = document.createElement('div');
+        box.className = 'loading_box';
+        box.innerHTML = '<div></div><p>' + text + '</p>';
+        this.output(layer, 0, box);
     }
-    toast (_text = 'toast', _time = 1500, fn) {
-        let _module = document.createElement('div');
-        _module.className = 'itoast';
-        _module.textContent = _text;
-        document.body.appendChild(_module);
+
+    /**
+     * 显示 toast 提示
+     * @param {string} text 提示内容
+     * @param {number} time 提示时间 (毫秒)
+     * @param {Function} callback 结束回调
+     */
+    toast(text = 'toast', time = 1500, callback) {
+        let box = document.createElement('div');
+        box.className = 'itoast';
+        box.textContent = text;
+        document.body.appendChild(box);
         setTimeout(() => {
-            _module.style.opacity = 0;
+            box.style.opacity = 0;
             setTimeout(() => {
-                document.body.removeChild(_module);
-                if (typeof fn === 'function') fn.call(this);
+                box.parentNode.removeChild(box);
+                if (typeof callback === 'function') callback.call(this);
             }, 200);
-        }, _time);
+        }, time);
     }
 }
-export default Prompts 
+
+/** 消息交互组件 */
+const dialog = new Dialogs();
+
+export default dialog;

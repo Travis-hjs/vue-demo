@@ -1,4 +1,4 @@
-function rippleClick(el) {
+export default function rippleClick(el) {
     let canvas = {},
         context = {},
         centerX = 0,
@@ -33,4 +33,3 @@ function rippleClick(el) {
     }
     draw();
 }
-export default rippleClick
