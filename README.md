@@ -8,7 +8,7 @@
 3. 下拉刷新，swiper轮播图，dialog组件，点击水波纹，ajax请求等插件参考我 my-note 仓库里面的源码
 
 >对于 vuex 这个的争议，如果不是很高级的功能，我觉得自行定义一个 class 作为数据管理会更加好，理由就是在 vscode 编辑器上面的代码追踪提示会非常有利于代码阅读和维护，这个我也是从TS那边得来的编程习惯。
-```{c++}
+```{javaScript}
 store.js:
 // 自行定义一个 class 作为数据管理
 class StoreModule{
