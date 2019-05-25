@@ -14,7 +14,9 @@ store.js:
 class StoreModule{
     /** 订单页面列表数据 */
     order: {
+        /** 订单日期 */
         date: '2018/12/12 12:12:12',
+        /** 订单状态 */
         state: 1
     }
 }
@@ -26,7 +28,7 @@ export default Store;
 
 订单页面.vue:
 <script>
-// 注意这里不要用 @/ 而是使用相对路径，不然vscode无法代码最终提示 
+// 注意这里不要用 @/ 而是使用相对路径，不然vscode无法代码追踪提示 
 import Store from '../module/store'
 export default {
 	data () {
