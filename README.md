@@ -43,8 +43,9 @@ export default {
 }
 </script>
 
-这样既有静态代码追踪提示，也有数据状态同步，原因是JavaScript变量的指针指向同一个内存，所以可以多个组件对等 Store 里面的属性时，同步更新，
-免去了 vuex 的事件派发个监听。当然，需要监听全局数据的变化时也可以利用 Object.defineProperty 和 new Proxy 在 Store 中进行数据监听。
+这样既有静态代码追踪提示，也有数据状态同步，原因是JavaScript变量的指针指向同一个内存，
+所以可以多个组件对等 Store 里面的属性时，同步更新，免去了 vuex 的事件派发个监听。
+当然，需要监听全局数据的变化时也可以利用 Object.defineProperty 和 new Proxy 在 Store 中进行数据监听。
 
 ```
 
