@@ -8,8 +8,10 @@
 3. 下拉刷新，swiper轮播图，dialog组件，点击水波纹，ajax请求等插件参考我 my-note 仓库里面的源码
 
 >对于 vuex 这个的争议，如果不是很高级的功能，我觉得自行定义一个 class 作为数据管理会更加好，理由就是在 vscode 编辑器上面的代码追踪提示会非常有利于代码阅读和维护，这个我也是从TS那边得来的编程习惯。
-```{javaScript}
-store.js:
+
+```js
+// step 1
+// store.js:
 // 自行定义一个 class 作为数据管理
 class StoreModule{
     /** 订单页面列表数据 */
@@ -26,22 +28,23 @@ const Store = new StoreModule;
 
 export default Store;
 
-订单页面.vue:
+// step 2
+// 订单页面.vue:
 <script>
 // 注意这里不要用 @/ 而是使用相对路径，不然vscode无法代码追踪提示 
 import Store from '../module/store'
 export default {
 	data () {
 		return {
-            // 页面实例化的时候获取数据
-            pageData: Store.order
+            		// 页面实例化的时候获取数据
+            		pageData: Store.order
 		}
 	}
 }
 </script>
 
-这样做只是静态化实例页面的时候做数据同步会比较好，因为有代码追踪提示；
-但是要想要在页面数据动态同步的话，就不推荐这样的写法了，这时候就需要vuex去管理了。
+这样既有静态代码追踪提示，也有数据状态同步，原因是JavaScript变量的指针指向同一个内存，所以可以多个组件对等 Store 里面的属性时，同步更新，
+免去了 vuex 的事件派发个监听。当然，需要监听全局数据的变化时也可以利用 Object.defineProperty 和 new Proxy 在 Store 中进行数据监听。
 
 ```
 
