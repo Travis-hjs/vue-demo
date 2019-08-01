@@ -16,7 +16,7 @@ store.js:
 ```js
 class StoreModule{
     /** 订单页面列表数据 */
-    order: {
+    order = {
         /** 订单日期 */
         date: '2018/12/12 12:12:12',
         /** 订单状态 */
