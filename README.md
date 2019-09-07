@@ -17,7 +17,7 @@
 
 5. 常用的网页组件：http请求、点击水波纹、上传图片、swiper轮播图、下拉刷新、上拉到底部监听、交互提示组件、基于 less 的UI组件。以上插件代码可以在 `https://github.com/Hansen-hjs/my-note/tree/master/JavaScript` 我这个仓库地址查看源码。
 
-**这里不使用 `vuex` 而自己定义数据管理模块可以看下我这篇文章 [你不需要 vuex](https://juejin.im/post/5d425a83f265da03d8719cb8)**
+**这里不使用 `vuex` 而自己定义数据管理模块可以看下我这篇文章 [你不需要 vuex](https://juejin.im/post/5d425a83f265da03d8719cb8) 如果需要`vuex` 的代码使用示例请切换到 `TS` 分支**
 
 ### 有需要的老哥可以支持一下
 ![my-code.png](https://github.com/Hansen-hjs/Hansen-hjs.github.io/blob/master/images/wxcode.jpg "my-code")
