@@ -1,0 +1,66 @@
+// 弹性盒子
+.flex(){ display: flex; flex-wrap: wrap }
+// 水平居中
+.fcenter(){ justify-content: center; }
+// 垂直居中
+.fvertical(){ align-items: center; }
+// 居右
+.fright() { flex-direction: row; justify-content: flex-end; }
+// 弹性盒子分块
+.f(@num){ flex: @num; }
+// 单行溢出...
+.ellipsis(){ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+// 多行溢出 ...
+.textWrap(@num){ display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: @num; text-overflow: ellipsis; overflow: hidden; }
+// 渐变背景
+.bg(){ background: linear-gradient(90deg, #31a2f7, #29d0f4); }
+// 背景自动填充
+.autoBg(){ background-size: cover; background-position: center center; }
+// 卡片
+.card(){ 
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12); 
+    border-radius: 2px; 
+    background-color: #fff;
+    overflow: hidden;
+}
+// 按钮
+.button() {
+    display: inline-block;
+    overflow: hidden;
+    outline: none;
+    border: none;
+    text-align: center;
+    border-radius: 2px;
+    min-width: 88px;
+    height: 36px;
+    // line-height: 36px;
+    vertical-align: middle;
+    padding: 0 16px; 
+    font-size: 14px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    color: #fff;
+    transition: .2s all;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+// 按钮点击
+.buttonActive() { box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12); }
+
+// 默认字体颜色
+@textColor: #333;
+// 主题颜色
+@themeColor: #6990f6;
+@gray: #999;
+@red: #f44336;
+@pink: #ff4081;
+@green: #4caf50;
+@yellow: #fdd835;
+@blue: #2196f3;
+@purple: #9c27b0;
+
+// 标题字体大小
+.st(){ font-size: .4rem; line-height: .6rem; }
+// 标准字体
+.s1(){ font-size: .3rem; line-height: .5rem; }
+// 标签字体
+.s2(){ font-size: .26rem; line-height: .46rem; }
