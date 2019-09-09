@@ -12,6 +12,16 @@ import { SwiperType } from "./interfaces";
  * @param params.pagination 是否需要底部圆点
  */
 export default function swiper(params: SwiperType) {
+    /** 组件节点 */
+    let node: HTMLElement;
+    /** item列表容器 */
+    let nodeItem: HTMLElement;
+    /** item节点列表 */
+    let nodeItems: Array<HTMLElement> = [];
+    /** 圆点容器 */
+    let nodePagination: HTMLElement;
+    /** 圆点列表 */
+    let nodeNodePaginationItems: Array<HTMLElement> = [];
     /** 是否需要底部圆点 */
     let pagination = false; 
     /** 是否需要回路 */
@@ -26,23 +36,40 @@ export default function swiper(params: SwiperType) {
     let moveTime = 300;
     /**
      * css class 命名列表
-     * @type {['滑动列表','滑动item','底部圆点','圆点高亮','圆点容器']}
+     * @dec ['滑动列表','滑动item','圆点容器','底部圆点','圆点高亮']
      */
-    const classNames: Array<string> = ['.swiper_list', '.swiper_item', '.swiper_dot', '.swiper_dot_active', '.swiper_pagination'];
+    const classNames: Array<string> = ['.swiper_list', '.swiper_item', '.swiper_pagination', '.swiper_dot', '.swiper_dot_active'];
+    
+    /** 设置动画 */
+    function startAnimation() {
+        nodeItem.style.transition = `${moveTime / 1000}s all`;
+    }
+    
+    /** 关闭动画 */
+    function stopAnimation() {
+        nodeItem.style.transition = '0s all';
+    }
 
     /**
-     * 触摸事件
-     * @param div 组件最外层节点 
+     * 属性样式滑动
+     * @param n 移动的距离
+     */
+    function slideStyle(n: number) {
+        let x = 0, y = 0;
+        if (direction) {
+            y = n;
+        } else {
+            x = n;
+        }
+        nodeItem.style.transform = `translate3d(${x}px, ${y}px, 0px)`;
+    }
+
+    /**
+     * 触摸开始
      * @param width 滚动容器的宽度
      * @param height 滚动容器的高度
      */
-    function touch(div: HTMLElement, width: number, height: number) {
-        /** item 列表 */
-        let list: HTMLElement = div.querySelector(classNames[0]) || new HTMLElement();
-        /** swiper */
-        let items = list.querySelectorAll(classNames[1]);
-        /** 底部圆点 */
-        let dots = div.querySelectorAll(classNames[2]);
+    function onTouch(width: number, height: number) {
         /** 触摸开始时间 */
         let startTime = 0; 
         /** 触摸结束时间 */
@@ -64,32 +91,8 @@ export default function swiper(params: SwiperType) {
         /** 移动范围 */
         let range = direction ? height : width;
         /** 动画帧 */
-        let animationFrame = window.requestAnimationFrame;
+        const animationFrame = requestAnimationFrame;
         
-        /** 设置动画 */
-        function startAnimation() {
-            list.style.transition = `${moveTime / 1000}s all`;
-        }
-        
-        /** 关闭动画 */
-        function stopAnimation() {
-            list.style.transition = '0s all';
-        }
-        
-        /**
-         * 属性样式滑动
-         * @param num 移动的距离
-         */
-        function slideStyle(num: number) {
-            let x = 0, y = 0;
-            if (direction) {
-                y = num;
-            } else {
-                x = num;
-            }
-            list.style.transform = `translate3d(${x}px, ${y}px, 0px)`;
-        }
-
         /** 判断最大拖动距离 */
         function touchRange() {
             /** 拖动距离 */
@@ -107,7 +110,7 @@ export default function swiper(params: SwiperType) {
                 if ((endDistance - startDistance) > 0 && index === 0) {
                     // console.log('到达最初');
                     _d = moveDistance + ((endDistance - startDistance) - ((endDistance - startDistance) * 0.6));
-                } else if ((endDistance - startDistance) < 0 && index === items.length - 1) {
+                } else if ((endDistance - startDistance) < 0 && index === nodeItems.length - 1) {
                     // console.log('到达最后');
                     _d = moveDistance + ((endDistance - startDistance) - ((endDistance - startDistance) * 0.6));
                 }
@@ -153,13 +156,13 @@ export default function swiper(params: SwiperType) {
                     loopCount += 1;
                     if (loopCount < moveTime / 1000 * 60) return animationFrame(loopMoveMin);
                     stopAnimation();
-                    slideStyle(range * -(items.length - 3));
+                    slideStyle(range * -(nodeItems.length - 3));
                     // 重置一下位置
-                    moveDistance = range * -(items.length - 3);
+                    moveDistance = range * -(nodeItems.length - 3);
                 }
                 loopMoveMin();
-                index = items.length - 3;
-            } else if (isLoop && index > items.length - 3) {
+                index = nodeItems.length - 3;
+            } else if (isLoop && index > nodeItems.length - 3) {
                 function loopMoveMax() {
                     loopCount += 1;
                     if (loopCount < moveTime / 1000 * 60) return animationFrame(loopMoveMax);
@@ -172,9 +175,9 @@ export default function swiper(params: SwiperType) {
             }
             // console.log(`第${ index+1 }张`);	// 这里可以做滑动结束回调
             if (pagination) {
-                const p: HTMLElement | null = div.querySelector(classNames[3]);
-                if (p) p.className = classNames[2].slice(1);
-                dots[index].classList.add(classNames[3].slice(1));
+                const dot: any = nodePagination.querySelector(classNames[4]);
+                dot.className = classNames[3].slice(1);
+                nodeNodePaginationItems[index].classList.add(classNames[4].slice(1));
             }
         }
 
@@ -185,7 +188,7 @@ export default function swiper(params: SwiperType) {
                 // 往上滑动 or 向左滑动
                 if (judgeTouch(-range)) {
                     // 判断有loop的时候不需要执行下面的事件
-                    if (!isLoop && moveDistance === (-(items.length - 1) * range)) return backLocation();
+                    if (!isLoop && moveDistance === (-(nodeItems.length - 1) * range)) return backLocation();
                     index += 1;
                     slideMove(moveDistance - range);
                     moveDistance -= range;
@@ -209,7 +212,7 @@ export default function swiper(params: SwiperType) {
                 slideMove(moveDistance - range);
                 moveDistance -= range;
             } else {
-                if (index >= items.length - 1) {
+                if (index >= nodeItems.length - 1) {
                     index = 0;
                     slideMove(0);
                     moveDistance = 0;
@@ -231,11 +234,11 @@ export default function swiper(params: SwiperType) {
         }
 
         // 判断是否需要开启自动播放
-        if (autoPaly && items.length - 1) startAuto();
+        if (autoPaly && nodeItems.length > 1) startAuto();
 
         // 开始触摸
-        list.addEventListener('touchstart', ev => {
-            startTime = new Date().getTime();
+        nodeItem.addEventListener('touchstart', ev => {
+            startTime = Date.now(); 
             count = 0;
             loopCount = moveTime / 1000 * 60;
             stopAnimation();
@@ -243,7 +246,7 @@ export default function swiper(params: SwiperType) {
         });
 
         // 触摸移动
-        list.addEventListener('touchmove', ev => {
+        nodeItem.addEventListener('touchmove', ev => {
             ev.preventDefault();
             count = 0;
             endDistance = direction ? ev.touches[0].pageY : ev.touches[0].pageX;
@@ -251,8 +254,8 @@ export default function swiper(params: SwiperType) {
         });
 
         // 触摸离开
-        list.addEventListener('touchend', () => {
-            endTime = new Date().getTime();
+        nodeItem.addEventListener('touchend', () => {
+            endTime = Date.now();
             // 判断是否点击
             if (endState !== endDistance) {
                 judgeMove();
@@ -268,98 +271,91 @@ export default function swiper(params: SwiperType) {
     }
     
     /**
-     * 动态布局
-     * @param div 组件最外层节点 
-     * @param width 滚动容器的宽度
-     * @param height 滚动容器的高度
-     */
-    function layout(div: HTMLElement, width: number, height: number) {
-        let list: HTMLElement | null = div.querySelector(classNames[0]), 
-            items: NodeListOf<HTMLElement> | null = div.querySelectorAll(classNames[1]);
-        if (!list) return;
-        if (direction) {
-            for (let i = 0; i < items.length; i++) {
-                items[i].style.height = `${height}px`;
-            }
-        } else {
-            list.style.width = `${width * items.length}px`;
-            for (let i = 0; i < items.length; i++) {
-                items[i].style.width = `${width}px`;
-            }
-        }
-        touch(div, width, height);
-    }
-    
-    /**
      * 如果要回路的话前后增加元素
-     * @param div 组件最外层节点 
      * @param width 滚动容器的宽度
      * @param height 滚动容器的高度
      */
-    function outputLoop(div: HTMLElement, width: number, height: number) {
-        let list: HTMLElement | null = div.querySelector(classNames[0]);
-        let items: NodeListOf<HTMLElement> | null = list ? list.querySelectorAll(classNames[1]) : null;
-        if (list && items) {
-            let first = items[0].cloneNode(true),
-                last = items[items.length - 1].cloneNode(true);
-            list.insertBefore(last, items[0]);
-            list.appendChild(first);
-            if (direction) {
-                list.style.top = `${-height}px`;
-            } else {
-                list.style.left = `${-width}px`;
-            }
-            layout(div, width, height);
+    function outputLoop(width: number, height: number) {
+        let first: any = nodeItems[0].cloneNode(true),
+            last: any = nodeItems[nodeItems.length - 1].cloneNode(true);
+        nodeItem.insertBefore(last, nodeItems[0]);
+        nodeItem.appendChild(first);
+        nodeItems.unshift(last);
+        nodeItems.push(first);
+        if (direction) {
+            nodeItem.style.top = `${-height}px`;
+        } else {
+            nodeItem.style.left = `${-width}px`;
         }
     }
 
     /**
-     * 输出底部圆点
-     * @param div 组件最外层节点 
+     * 动态布局
+     * @param width 滚动容器的宽度
+     * @param height 滚动容器的高度
      */
-    function outputPagination(div: HTMLElement) {
-        let btnList: HTMLElement | null = div.querySelector(classNames[4]),
-            liNum = div.querySelectorAll(classNames[1]).length,
-            html = '';
-        for (let i = 0; i < liNum; i++) {
-            html += `<div class="${classNames[2].slice(1)}"></div>`;
-        }
-        if (btnList) {
-            btnList.innerHTML = html;
-            const p = btnList.querySelector(classNames[2]);
-            p && p.classList.add(classNames[3].slice(1));
-        }
-    }
-    
-    /**
-     * 动态布局初始化 
-     * @param el 组件节点 class|id|<label> 
-     */
-    function format(el: string) {
-        /** 组件最外层节点 */
-        let node: HTMLElement | null = document.querySelector(el);
-        if (node) {
-            let moveWidth = node.offsetWidth, 
-                moveHeight = node.offsetHeight;
-            if (pagination) outputPagination(node);
-            if (isLoop) {
-                outputLoop(node, moveWidth, moveHeight);
-            } else {
-                layout(node, moveWidth, moveHeight);
+    function layout(width: number, height: number) {
+        if (direction) {
+            for (let i = 0; i < nodeItems.length; i++) {
+                nodeItems[i].style.height = `${height}px`;
+            }
+        } else {
+            nodeItem.style.width = `${width * nodeItems.length}px`;
+            for (let i = 0; i < nodeItems.length; i++) {
+                nodeItems[i].style.width = `${width}px`;
             }
         }
-        
+    }
+
+    /** 输出底部圆点 */
+    function outputPagination() {
+        let html = '';
+        const p: any =  node.querySelector(classNames[2]);
+        nodePagination = p;
+        // 如果没有找到对应节点则创建一个
+        if (!nodePagination) {
+            nodePagination = document.createElement('div');
+            nodePagination.className = classNames[2].slice(1);
+            node.appendChild(nodePagination);
+        }
+        for (let i = 0; i < nodeItems.length; i++) {
+            html += `<div class="${classNames[3].slice(1)}"></div>`;
+        }
+        nodePagination.innerHTML = html;
+        const nodes: any = [...nodePagination.querySelectorAll(classNames[3])]
+        nodeNodePaginationItems = nodes;
+        const dot: any = nodePagination.querySelector(classNames[3]);
+        dot.classList.add(classNames[4].slice(1));
+    }
+    
+    /** 动态布局初始化 */
+    function format() {
+        const _node: any = document.querySelector(params.el);
+        node = _node;
+        if (!node) return console.warn('没有可执行的节点！');
+        const _nodeItem: any = node.querySelector(classNames[0]);
+        nodeItem = _nodeItem;
+        if (!nodeItem) return console.warn(`缺少"${classNames[0]}"节点！`);
+        const _nodeItems: any = [...node.querySelectorAll(classNames[1])];
+        nodeItems = _nodeItems;
+        if (nodeItems.length == 0) return console.warn('滑动节点个数必须大于0！');
+        let moveWidth = node.offsetWidth, moveHeight = node.offsetHeight;
+        if (pagination) outputPagination();
+        if (isLoop) outputLoop(moveWidth, moveHeight);
+        layout(moveWidth, moveHeight);
+        onTouch(moveWidth, moveHeight);
     }
     
     /** 初始化参数 */
     function init() {
+        if (typeof params !== 'object') return console.warn('传参有误');
         pagination = params.pagination || false;
         direction = params.vertical || false;
         autoPaly = params.autoPaly || false;
         isLoop = params.loop || false;
         moveTime = params.moveTime || 300;
         interval = params.interval || 3000;
-        format(params.el);
+        format();
     }
     init();
 }
