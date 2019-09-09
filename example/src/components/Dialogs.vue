@@ -6,8 +6,8 @@
                     <div class="box-title">{{ info.title }}</div>
                     <div class="content">{{ info.content }}</div>
                     <div class="btn-box">
-                        <div v-show="info.type == 'confirm'" class="cancel" @click="cancelBtn">取消</div>
-                        <div class="success" @click="confirmBtn">确定</div>
+                        <div v-show="info.type == 'confirm'" class="cancel" @click="cancelBtn">{{ info.cancelText }}</div>
+                        <div class="success" @click="confirmBtn">{{ info.confirmText }}</div>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@ export default class Dialog extends Vue {
         width: 100%; height: 100vh; position: fixed; top: 0; left: 0; z-index: 999; background-color: rgba(0,0,0,0.45); .flex(); .fvertical(); .fcenter();
         .loading{
             text-align: center;
-            .preloader{ display: inline-block; margin-bottom: 10px; }
+            .preloader{ display: inline-block; }
             .loading-text { .s1(); text-align: center; color: @blue; line-height: 30px; }
         }
         .box{ 

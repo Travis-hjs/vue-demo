@@ -64,12 +64,13 @@ export default class Plug extends Vue {
     showConfirm() {
         Global.openDialog({
             type: 'confirm',
-            content: '确定-取消提示框'
-        }, () => {}, () => {
-            Global.openDialog({
-                type: 'alert',
-                content: '点击了取消',
-            });
+            content: '确定-取消提示框',
+            cancel() {
+                Global.openDialog({
+                    type: 'alert',
+                    content: '点击了取消',
+                });
+            }
         });
     }
 
@@ -90,12 +91,21 @@ export default class Plug extends Vue {
         Global.openDialog({
             type: 'loading'
         });
-        api.testPost(res => {
-            Global.hideDialog();
-            this.content = JSON.stringify(res);
-        }, err => {
-            Global.hideDialog();
-        });
+        const isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if (isiOS) {
+            setTimeout(() => {
+                this.content = 'ios 下 GitHub 无法请求其他地址，Android 或 PC 可以';
+                Global.hideDialog();
+            }, 1000);
+        } else {
+            api.testPost(res => {
+                Global.hideDialog();
+                this.content = JSON.stringify(res);
+            }, err => {
+                Global.hideDialog();
+            });
+        }
+        
     }
     
     copyText() {
@@ -106,8 +116,10 @@ export default class Plug extends Vue {
         Global.openDialog({
             type: 'confirm',
             content: '复制成功，是否清空文本框数据？',
-        }, () => {
-            this.content = '';
+            cancelText: '不清空',
+            confirm: () => {
+                this.content = '';
+            }
         });
     }
 
@@ -134,12 +146,13 @@ export default class Plug extends Vue {
         dr.onStart(100, function() {
             // console.log('下拉成功');
             Global.openDialog({
-                type: 'loading'
+                type: 'loading',
+                content: '刷新中'
             });
             setTimeout(function() {
                 Global.hideDialog();
                 dr.end();
-            }, 2000);
+            }, 2600);
         })
     }
 }

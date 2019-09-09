@@ -24,19 +24,21 @@ class ModuleGlobal {
 
     /**
      * 打开消息提示组件
-     * @param options 
-     * @param confirmCallback 确认回调
-     * @param cancelCallback 取消回调
+     * @param options 设置参数
      */
-    public openDialog(options: ShowDialogOptionsType, confirmCallback?: Function, cancelCallback?: Function) {
+    public openDialog(options: ShowDialogOptionsType) {
         const THAT = this;
         this.dialog.show = true;
         this.dialog.type = options.type;
         this.dialog.title = options.title || '提示';
-        this.dialog.content = options.content || '加载中';
+        this.dialog.content = options.content || 'loading';
+        this.dialog.confirmText = options.confirmText || '确认';
+        this.dialog.cancelText = options.cancelText || '取消';
         this.dialog.confirm = false;
         this.dialog.cancel = false;
-
+        const confirmCallback = options.confirm || null;
+        const cancelCallback = options.cancel || null;
+        // 取消回调监听
         this.watch_confirm = this.watch_cancel = null;
         if (confirmCallback) {
             this.watch_confirm = Object.defineProperty(this.dialog, 'confirm', {

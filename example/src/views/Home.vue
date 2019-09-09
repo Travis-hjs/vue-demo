@@ -48,9 +48,12 @@ export default class Home extends Vue {
             this.interval = true;
             Global.openDialog({
                 type: 'confirm',
-                content: '到达页面底部，是否继续监听滚动到底部事件?'
-            }, () => {
-                this.interval = false;
+                content: '到达页面底部，是否继续监听滚动到底部事件?',
+                confirmText: '继续监听',
+                cancelText: '不监听',
+                confirm: () => {
+                    this.interval = false;
+                }
             });
         }
     }

@@ -2,7 +2,12 @@
     <div class="upload-img">
         <div v-if="imgUrl" class="img-box">
             <img class="image" :src="imgUrl">
-            <div @click="removeImg()" class="remove">×</div>
+            <div @click="removeImg()" class="remove">
+                <svg t="1567996911031" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2169" width="18" height="18">
+                    <path d="M806.4 172.8l-633.6 633.6c-12.8 12.8-12.8 32 0 44.8 12.8 12.8 32 12.8 44.8 0l633.6-633.6c12.8-12.8 12.8-32 0-44.8-12.8-12.8-32-12.8-44.8 0z" fill="#ffffff" p-id="2170"></path>
+                    <path d="M172.8 172.8c-12.8 12.8-12.8 32 0 44.8l633.6 633.6c12.8 12.8 32 12.8 44.8 0 12.8-12.8 12.8-32 0-44.8L217.6 172.8c-12.8-12.8-32-12.8-44.8 0z" fill="#ffffff" p-id="2171"></path>
+                </svg>
+            </div>
         </div>
         <div v-else class="upload">
             <div class="add-icon"></div>
@@ -56,9 +61,10 @@ export default class UploadImg extends Vue {
         }
 
         // 静态上传
-        const src = this.getObjectURL(file);
-        this.sendImgSrc(src);
-        input.value = null;
+        this.getBase64(file, (res: string) => {
+            this.sendImgSrc(res);
+            input.value = null;
+        });
         
         // let formData = new FormData();
         // formData.append('img', file);
@@ -87,21 +93,17 @@ export default class UploadImg extends Vue {
         this.sendImgSrc('');
     }
 
-    /**
-     * 获取二进制路径（需要打开服务器调试）
+    /** 
+     * 获取 base64
      * @param file 文件
+     * @param callback 回调
      */
-    private getObjectURL(file: File) {
-        let url = null;
-        // if (window['createObjectURL']) {
-        //     url = window['createObjectURL'](file);
-        // } else if (window.URL) {
-        //     url = window.URL.createObjectURL(file);
-        // } else if (window['webkitURL']) {
-        //     url = window['webkitURL'].createObjectURL(file);
-        // }
-        url = window.URL.createObjectURL(file);
-        return url;
+    private getBase64(file: File, callback: Function) {
+        let reader = new FileReader();
+        reader.onload = function() {
+            if (callback) callback(reader.result);
+        }
+        reader.readAsDataURL(file);
     }
 }
 </script>

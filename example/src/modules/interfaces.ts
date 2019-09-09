@@ -17,8 +17,12 @@ export interface DialogOptionsType {
     content?: string
     /** 是否点击确认 */
     confirm?: boolean
+    /** 确认按钮文字 */
+    confirmText?: string
     /** 是否点击取消 */
     cancel?: boolean,
+    /** 取消按钮文字 */
+    cancelText?: string
     /** 提示列表 */
     toastList: Array<toastListType>
 }
@@ -31,6 +35,14 @@ export interface ShowDialogOptionsType {
     title?: string
     /** 内容 */
     content?: string
+    /** 点击确认回调 */
+    confirm?: Function
+    /** 确认按钮文字 */
+    confirmText?: string
+    /** 点击取消回调 */
+    cancel?: Function
+    /** 取消按钮文字 */
+    cancelText?: string
 }
 
 /** ajax 传参对象 */
