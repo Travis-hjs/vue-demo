@@ -91,10 +91,10 @@ export default class Plug extends Vue {
         Global.openDialog({
             type: 'loading'
         });
-        const isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-        if (isiOS) {
+        const patt = /github/;
+        if (patt.test(location.hostname)) {
             setTimeout(() => {
-                this.content = 'ios 下 GitHub 无法请求其他地址，Android 或 PC 可以';
+                this.content = 'GitHub 无法请求非 https 地址，请克隆项目到本地打开调试';
                 Global.hideDialog();
             }, 1000);
         } else {
@@ -153,7 +153,7 @@ export default class Plug extends Vue {
                 Global.hideDialog();
                 dr.end();
             }, 2600);
-        })
+        });
     }
 }
 </script>
