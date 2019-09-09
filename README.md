@@ -1,55 +1,23 @@
-# vue.js(2.0) + vue-router + vuex 实现的单页移动端
-### 仅供学习参考，请勿商用，转载请标明出处~
+# vue + vue-router + ts 构建单页应用
 
-1. 页面切换的动画是用 watch 去监听 router 的 行为 然后进行动画切换实现
+**之前的 `js` 版本已经删除了，未来的 `vue3.0` 发布后也会是用 `ts` 去编写**
 
-2. 常用的 Props 子父传参 store 数据仓库使用都有，wtach 和 computed 这两个核心功能只是做简单的演示，更高级的功能自己去研究吧，也可以问我；另外列表队列动画我非常喜欢，而且是Vue自带的，React要实现的话好像代码要比较多
+仅供学习参考，请勿商用，转载请标明出处~
 
-3. 下拉刷新，swiper轮播图，dialog组件，点击水波纹，ajax请求等插件参考我 my-note 仓库里面的源码
+**预览地址：[vue-example](https://hansen-hjs.github.io/cv/demo/vue/)**
 
->对于 vuex 这个的争议，如果不是很高级的功能，我觉得自行定义一个 class 作为数据管理会更加好，理由就是在 vscode 编辑器上面的代码追踪提示会非常有利于代码阅读和维护，这个我也是从TS那边得来的编程习惯。
+## 功能清单（这里只用到 `vue-router` 一个依赖，其余都是自己实现）
+1. 路由切换时模拟 APP 的页面切换动画
 
-step 1  
-store.js:  
-自行定义一个 class 作为数据管理  
+2. 核心 api: `watch` 和 `computed` 使用和对应场景在 `ts` 项目中，不会出现 `computed` 关键字，而是 `get xxx() {}` 
 
-```js
-class StoreModule{
-    /** 订单页面列表数据 */
-    order = {
-        /** 订单日期 */
-        date: '2018/12/12 12:12:12',
-        /** 订单状态 */
-        state: 1
-    }
-}
+3. 自带的队列动画和过渡动画场景使用（配合`computed`）
 
-/** 全局数据 */
-const Store = new StoreModule;
+4. 自定义 `class ModuleStore {}` 代替 `vuex` 更好的代码追踪和提示
 
-export default Store;
-```
+5. 常用的网页组件：http请求、点击水波纹、上传图片、swiper轮播图、下拉刷新、上拉到底部监听、交互提示组件、基于 less 的UI组件。以上插件代码可以在 `https://github.com/Hansen-hjs/my-note/tree/master/JavaScript` 我这个仓库地址查看源码。
 
-step 2  
-goods.vue:  
-注意这里不要用 @/ 而是使用相对路径，不然vscode无法代码追踪提示   
-```js
-<script>
-import Store from '../module/store'
-export default {
-    data () {
-        return {
-            // 页面实例化的时候获取数据
-            pageData: Store.order
-        }
-    }
-}
-</script>
-
-// 这样既有静态代码追踪提示，也有数据状态同步，原因是JavaScript变量的指针指向同一个内存，
-// 所以可以多个组件对等 Store 里面的属性时，同步更新，免去了 vuex 的事件派发和监听。
-// 当然，需要监听全局数据的变化时也可以利用 Object.defineProperty 和 new Proxy 在 Store 中进行数据监听。
-```
+**这里不使用 `vuex` 而自己定义数据管理模块可以看下我这篇文章 [你不需要 vuex](https://juejin.im/post/5d425a83f265da03d8719cb8) 如果需要`vuex` 的代码使用示例请切换到 `TS` 分支**
 
 ### 有需要的老哥可以支持一下
 ![my-code.png](https://github.com/Hansen-hjs/Hansen-hjs.github.io/blob/master/images/wxcode.jpg "my-code")
