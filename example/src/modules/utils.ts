@@ -40,7 +40,7 @@ class ModuleUtils {
      * 随机打乱数组
      * @param array 
      */
-    public shuffleArray(array: Array<any>) {
+    public shuffleArray<T>(array: Array<T>) {
         // 洗牌随机法（性能最优）
         for (let i = array.length - 1; i >= 0; i--) {
             let randomIndex = Math.floor(Math.random() * (i + 1));
