@@ -33,7 +33,7 @@ import api from '../api/network';
 import store from '../modules/store';
 import Global from '../modules/Global';
 import swiper from '../modules/swiper';
-import DropDownRefresh from '../modules/refresh';
+import dropDownRefresh from '../modules/refresh';
 
 @Component({})
 export default class Plug extends Vue {
@@ -142,17 +142,28 @@ export default class Plug extends Vue {
             loop: true,
             vertical: true
         });
-        const dr = new DropDownRefresh('.plug');
-        dr.onStart(100, function() {
-            // console.log('下拉成功');
-            Global.openDialog({
-                type: 'loading',
-                content: '刷新中'
-            });
-            setTimeout(function() {
-                Global.hideDialog();
-                dr.end();
-            }, 2600);
+        const page: any = document.querySelector('.plug');
+        const nav: any = document.querySelector('.nav');
+        const refresh = dropDownRefresh({
+            el: page,
+            distance: 100,
+            deviation: nav.clientHeight,
+            loadIcon: `<div class="preloader">
+                <div class="preloader-inner">
+                    <div class="preloader-inner-gap"></div>
+                    <div class="preloader-inner-left">
+                        <div class="preloader-inner-half-circle"></div>
+                    </div>
+                    <div class="preloader-inner-right">
+                        <div class="preloader-inner-half-circle"></div>
+                    </div>
+                </div>
+            </div>`
+        });
+        refresh.onStart(() => {
+            setTimeout(() => {
+                refresh.end();
+            }, 1800);
         });
     }
 }

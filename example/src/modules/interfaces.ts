@@ -129,3 +129,15 @@ export interface QueueData {
     /** 存放不变的数组 */
     goodsList: Array<QueueListInfo>
 }
+
+/** 下拉刷新组件传参类型 */
+export interface RefreshInfo {
+    /** 下拉元素 */
+    el: HTMLElement
+    /** 下拉距离[px] */
+    distance?: number
+    /** 下拉中的 icon html */
+    loadIcon?: string,
+    /** 顶部往下偏移量[px] */
+    deviation?: number
+}
