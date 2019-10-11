@@ -19,7 +19,7 @@
         <button ripple class="bluebtn plug-btn" @click="showLoading">loading</button>
         <button ripple class="bluebtn plug-btn" @click="showToast">toast</button>
         <div class="title">http请求</div>
-        <button ripple class="bluebtn plug-btn" @click="postData">post请求</button>
+        <button ripple class="bluebtn plug-btn" @click="postData">发送请求</button>
         <textarea class="text-box" ref="text-box" placeholder="请求结果容器" v-model.trim="content"></textarea>
         <transition name="fade">
             <button ripple class="greenbtn plug-btn" @click="copyText" v-show="content">复制结果</button>
@@ -91,21 +91,25 @@ export default class Plug extends Vue {
         Global.openDialog({
             type: 'loading'
         });
-        const patt = /github/;
-        if (patt.test(location.hostname)) {
-            setTimeout(() => {
-                this.content = 'GitHub 无法请求非 https 地址，请克隆项目到本地打开调试';
-                Global.hideDialog();
-            }, 1000);
-        } else {
-            api.testPost(res => {
+        // const patt = /github/;
+        // if (patt.test(location.hostname)) {
+            api.testGet(res => {
                 Global.hideDialog();
                 this.content = JSON.stringify(res);
+                console.log('请求成功', res);
             }, err => {
                 Global.hideDialog();
+                console.log('请求错误', err);
             });
-        }
-        
+        // } else {
+        //     api.testPost(res => {
+        //         Global.hideDialog();
+        //         this.content = JSON.stringify(res);
+        //     }, err => {
+        //         Global.hideDialog();
+        //         console.log(err.message);
+        //     })
+        // }
     }
     
     copyText() {

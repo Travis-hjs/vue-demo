@@ -31,6 +31,26 @@ class ModuleNetWork {
             if (fail) fail(err);
         });
     }
+
+    /**
+     * 测试 GET 
+     * @param success 请求成功回调
+     * @param fail 请求失败回调
+     */
+    public testGet(success?: (result?: any) => void, fail?: (error?: any) => void) {
+        let url = 'https://douban.uieee.com/v2/movie/top250?start=1&count=10';
+        const XHR = new XMLHttpRequest();
+        XHR.onreadystatechange = function () {
+            if (XHR.readyState !== 4) return;
+            if (XHR.status === 200 || XHR.status === 304) {
+                if (success) success(JSON.parse(XHR.response));
+            } else {
+                if (fail) fail(XHR);
+            }
+        }
+        XHR.open('GET', url, true);
+        XHR.send(null);
+    }
 }
 
 /** 接口模块 */
