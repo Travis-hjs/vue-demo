@@ -42,12 +42,10 @@ export default function dropDownRefresh(option: RefreshInfo) {
         page.style.transform = topNode.style.transform = `translate3d(0px, ${n}px, 0px)`;
     }
 
-    const _icon: any = topNode.querySelector('[refresh-icon]');
-    const _loading: any = topNode.querySelector('[refresh-loading]');
     /** 下拉提示 icon */
-    const icon: HTMLElement = _icon;
+    const icon = topNode.querySelector('[refresh-icon]') as HTMLElement;
     /** 下拉 loading 动画 */
-    const loading: HTMLElement = _loading;
+    const loading = topNode.querySelector('[refresh-loading]') as HTMLElement;
 
     return {
         /**

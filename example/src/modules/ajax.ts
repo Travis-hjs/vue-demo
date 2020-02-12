@@ -1,10 +1,10 @@
-import { AjaxType, RequestFail, RequestSuccess } from "./interfaces";
+import { AjaxParams, RequestFail, RequestSuccess } from "./interfaces";
 
 /**
  * XMLHttpRequest 请求 
  * learn: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
  */
-function ajax(param: AjaxType) {
+function ajax(param: AjaxParams) {
     /** XMLHttpRequest */
     const XHR = new XMLHttpRequest();
     /** 请求方法 */
@@ -42,9 +42,9 @@ function ajax(param: AjaxType) {
     XHR.onreadystatechange = function () {
         if (XHR.readyState !== 4) return;
         if (XHR.status === 200 || XHR.status === 304) {
-            if (param.success) param.success(JSON.parse(XHR.response));
+            param.success && param.success(JSON.parse(XHR.response));
         } else {
-            if (param.fail) param.fail(XHR);
+            param.fail && param.fail(XHR);
         }
     }
 
@@ -74,7 +74,7 @@ function ajax(param: AjaxType) {
         XHR.ontimeout = function () {
             console.warn('ajax 请求超时 !!!');
             XHR.abort();
-            if (param.timeout) param.timeout(XHR);
+            param.timeout && param.timeout(XHR);
         }
     }
 
@@ -93,7 +93,7 @@ const baseUrl = 'http://che.qihao.lzei.com';
  * @param fail 失败回调
  * @param upload 上传图片 FormData
  */
-export default function baseRequest(method: AjaxType['method'], url: string, data: object, success?: RequestSuccess, fail?: RequestFail, upload?: AjaxType['file']) {
+export default function baseRequest(method: AjaxParams['method'], url: string, data: object, success?: RequestSuccess, fail?: RequestFail, upload?: AjaxParams['file']) {
     ajax({
         url: baseUrl + url,
         method: method,
@@ -101,7 +101,7 @@ export default function baseRequest(method: AjaxType['method'], url: string, dat
         file: upload,
         overtime: 8000,
         success(res) {
-            if (success) success(res);
+            success && success(res);
         },
         fail(err) {
             let error = {
@@ -110,13 +110,13 @@ export default function baseRequest(method: AjaxType['method'], url: string, dat
             if (err.response.charAt(0) == '{') {
                 error = JSON.parse(err.response);
             }
-            if (fail) fail(error);
+            fail && fail(error);
         },
         timeout() {
             let error = {
                 message: '请求超时'
             }
-            if (fail) fail(error);
+            fail && fail(error);
         }
     });
 }

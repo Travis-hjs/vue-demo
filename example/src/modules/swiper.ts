@@ -1,4 +1,4 @@
-import { SwiperType } from "./interfaces";
+import { SwiperOptions } from "./interfaces";
 
 /**
  * swiper 轮播组件
@@ -11,7 +11,7 @@ import { SwiperType } from "./interfaces";
  * @param params.autoPaly 是否需要自动播放
  * @param params.pagination 是否需要底部圆点
  */
-export default function swiper(params: SwiperType) {
+export default function swiper(params: SwiperOptions) {
     /** 组件节点 */
     let node: HTMLElement;
     /** item列表容器 */
@@ -175,7 +175,7 @@ export default function swiper(params: SwiperType) {
             }
             // console.log(`第${ index+1 }张`);	// 这里可以做滑动结束回调
             if (pagination) {
-                const dot: any = nodePagination.querySelector(classNames[4]);
+                const dot = nodePagination.querySelector(classNames[4]) as HTMLElement;
                 dot.className = classNames[3].slice(1);
                 nodeNodePaginationItems[index].classList.add(classNames[4].slice(1));
             }
@@ -276,8 +276,8 @@ export default function swiper(params: SwiperType) {
      * @param height 滚动容器的高度
      */
     function outputLoop(width: number, height: number) {
-        let first: any = nodeItems[0].cloneNode(true),
-            last: any = nodeItems[nodeItems.length - 1].cloneNode(true);
+        let first = nodeItems[0].cloneNode(true) as HTMLElement,
+            last = nodeItems[nodeItems.length - 1].cloneNode(true) as HTMLElement;
         nodeItem.insertBefore(last, nodeItems[0]);
         nodeItem.appendChild(first);
         nodeItems.unshift(last);
@@ -310,8 +310,7 @@ export default function swiper(params: SwiperType) {
     /** 输出底部圆点 */
     function outputPagination() {
         let html = '';
-        const p: any =  node.querySelector(classNames[2]);
-        nodePagination = p;
+        nodePagination = node.querySelector(classNames[2]) as HTMLElement;
         // 如果没有找到对应节点则创建一个
         if (!nodePagination) {
             nodePagination = document.createElement('div');
@@ -322,22 +321,18 @@ export default function swiper(params: SwiperType) {
             html += `<div class="${classNames[3].slice(1)}"></div>`;
         }
         nodePagination.innerHTML = html;
-        const nodes: any = [...nodePagination.querySelectorAll(classNames[3])]
-        nodeNodePaginationItems = nodes;
-        const dot: any = nodePagination.querySelector(classNames[3]);
+        nodeNodePaginationItems = [...nodePagination.querySelectorAll(classNames[3])] as Array<HTMLElement>;
+        const dot = nodePagination.querySelector(classNames[3]) as HTMLElement;
         dot.classList.add(classNames[4].slice(1));
     }
     
     /** 动态布局初始化 */
     function format() {
-        const _node: any = document.querySelector(params.el);
-        node = _node;
+        node = document.querySelector(params.el) as HTMLElement;
         if (!node) return console.warn('没有可执行的节点！');
-        const _nodeItem: any = node.querySelector(classNames[0]);
-        nodeItem = _nodeItem;
+        nodeItem = node.querySelector(classNames[0]) as HTMLElement;
         if (!nodeItem) return console.warn(`缺少"${classNames[0]}"节点！`);
-        const _nodeItems: any = [...node.querySelectorAll(classNames[1])];
-        nodeItems = _nodeItems;
+        nodeItems = [...node.querySelectorAll(classNames[1])] as Array<HTMLElement>;
         if (nodeItems.length == 0) return console.warn('滑动节点个数必须大于0！');
         let moveWidth = node.offsetWidth, moveHeight = node.offsetHeight;
         if (pagination) outputPagination();

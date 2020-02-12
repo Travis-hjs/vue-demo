@@ -14,8 +14,7 @@ function ripple(event: any, target: HTMLElement) {
 
     // 从对象池里面拿取节点
     if (RIPPLE_POOL.length > 1) {
-        const item: any = RIPPLE_POOL.shift();
-        node = item;
+        node = RIPPLE_POOL.shift() as HTMLElement;
     } else {
         node = document.createElement('div');
         node.className = 'ripple';

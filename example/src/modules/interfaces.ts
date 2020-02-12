@@ -46,7 +46,7 @@ export interface ShowDialogOptionsType {
 }
 
 /** ajax 传参对象 */
-export interface AjaxType {
+export interface AjaxParams {
     /** 请求路径 */
     url: string
     /** 请求方法 */
@@ -82,7 +82,7 @@ export interface RequestSuccess {
 }
 
 /** 轮播组件传参信息 */
-export interface SwiperType {
+export interface SwiperOptions {
     /** 组件节点 class|id|<label> */
     el: string
     /** 过渡时间（毫秒）默认 300 */
