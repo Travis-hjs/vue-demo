@@ -13,6 +13,7 @@
 import { Component, Watch, Vue  } from 'vue-property-decorator';
 import utils from './modules/utils';
 import Dialog from './components/Dialogs.vue';
+import Global from './modules/Global';
 
 @Component({
     components: {
@@ -24,20 +25,20 @@ export default class Root extends Vue {
     private transitionName = 'page-next';
 
     /** 监听路由变化 */
-    @Watch('$route') onRoute(to: any, from: any) {
-        //  监听路由变化时的状态为前进还是后退
-        // isBack 要在 node_modules/vue-router/types/router.d.ts 下自定义声明
-        if(this['$router'].isBack) {
+    @Watch('$route') onRoute() {
+        // 监听路由变化时的状态为前进还是后退
+        if(Global.routeBack) {
             this.transitionName = 'page-back';
         } else {
             this.transitionName = 'page-next';
         }
-        this['$router'].isBack = false;
+        Global.routeBack = false;
     }
 
     mounted() {
-        const page: any = document.getElementById('app');
+        const page = document.getElementById('app') as HTMLElement;
         utils.remSetting(page);
+        console.log("执行");
         
     }
 }

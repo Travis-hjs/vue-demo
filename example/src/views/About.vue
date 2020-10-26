@@ -8,6 +8,7 @@
 </template>
 
 <script lang="ts">
+import Global from '@/modules/Global';
 import { Component, Vue  } from 'vue-property-decorator';
 import store from '../modules/store';
 
@@ -21,19 +22,19 @@ export default class About extends Vue {
     private title = '空白页..';
 
     goBack() {
-        this['$router'].goBack();
+        Global.routeGoBack();
     }
 
     nextPage() {
-        this['$router'].push(`/page/${this.id}`);
+        this.$router.push(`/page/${this.id}`);
         // location.reload();
     }
 
     mounted() {
-        const id = Number(this['$route'].params.id);
+        const id = Number(this.$route.params.id);
         this.title = '空白页-' + id;
         this.id = id + 1;
-        // console.log(this['$route']);
+        // console.log(this.$route);
     }
 }
 </script>

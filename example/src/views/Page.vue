@@ -9,9 +9,10 @@
 
 <script lang="ts">
 import { Component, Vue  } from 'vue-property-decorator';
+import Global from '../modules/Global';
 import store from '../modules/store';
 
-@Component
+@Component({})
 export default class About extends Vue {
     private src = store.swiperList[1].img;
 
@@ -20,19 +21,19 @@ export default class About extends Vue {
     private title = '空白页..';
 
     goBack() {
-        this['$router'].goBack();
+        Global.routeGoBack();
     }
 
     nextPage() {
-        this['$router'].push(`/about/${this.id}`);
+        this.$router.push(`/about/${this.id}`);
         // location.reload();
     }
 
     mounted() {
-        const id = Number(this['$route'].params.id);
+        const id = Number(this.$route.params.id);
         this.title = '空白页-' + id;
         this.id = id + 1;
-        // console.log(this['$route']);
+        // console.log(this.$route);
     }
 }
 </script>

@@ -2,6 +2,19 @@ import { DialogOptionsType, ShowDialogOptionsType, toastListType } from './inter
 
 class ModuleGlobal {
     constructor() {}
+
+    /** 是否路由回退（作路由切换动画用） */
+    routeBack = false;
+
+    /**
+     * 路由回退
+     * @param n 回退多少层（负数）
+     */
+    routeGoBack(n = -1) {
+        this.routeBack = true;
+        window.history.go(n);
+    }
+
     /** toast 唯一 key */
     private toastId = 1;
 

@@ -16,7 +16,7 @@ import { Component, Vue  } from 'vue-property-decorator';
 @Component
 export default class Index extends Vue {
     private nextPage () {
-        this['$router'].push('/about/1');
+        this.$router.push('/about/1');
     }
 }
 </script>
