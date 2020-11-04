@@ -17,7 +17,9 @@ const Card = defineComponent({
         const images = [
             "https://muse-ui.org/img/img1.35d144b4.png",
             "https://muse-ui.org/img/img2.9bd96df4.png",
-            "https://muse-ui.org/img/img3.6e264e66.png"
+            "https://muse-ui.org/img/img3.6e264e66.png",
+            "https://muse-ui.org/img/sun.a646a52d.jpg",
+            "https://muse-ui.org/img/breakfast.f1098290.jpg"
         ]
 
         let count = 0;
